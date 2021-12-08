@@ -1,8 +1,8 @@
-China Area Network
-> 360
+#China Area Network
+#> 360
  - qhres.com,直连
  - qhimg.com,直连
-> Alibaba
+#> Alibaba
  - USER-AGENT,%E4%BC%98%E9%85%B7*,直连
  - alibaba.com,直连
  - alibabausercontent.com,直连
@@ -21,7 +21,7 @@ China Area Network
  - youku.com,直连
  - xiami.com,直连
  - xiami.net,直连
-> Apple
+#> Apple
  - aaplimg.com,直连
  - apple.co,直连
  - apple.com,直连
@@ -32,9 +32,9 @@ China Area Network
  - icloud-content.com,直连
  - me.com,直连
  - mzstatic.com,直连
-DOMAIN-KEYWORD,apple.com.akadns.net,直连
-DOMAIN-KEYWORD,icloud.com.akadns.net,直连
-> Baidu
+ - DOMAIN-KEYWORD,apple.com.akadns.net,直连
+ - DOMAIN-KEYWORD,icloud.com.akadns.net,直连
+#> Baidu
  - baidu.com,直连
  - baidubcr.com,直连
  - baidupan.com,直连
@@ -42,58 +42,58 @@ DOMAIN-KEYWORD,icloud.com.akadns.net,直连
  - bdimg.com,直连
  - bdstatic.com,直连
  - yunjiasu-cdn.net,直连
-> Battle
+#> Battle
  - battle.net,直连
  - blizzard.com,直连
-> bilibili
+#> bilibili
  - acgvideo.com,直连
  - biliapi.com,直连
  - biliapi.net,直连
  - bilibili.com,直连
  - bilibili.tv,直连
  - hdslb.com,直连
-> ByteDance
+#> ByteDance
  - feiliao.com,直连
  - pstatp.com,直连
  - snssdk.com,直连
  - iesdouyin.com,直连
  - toutiao.com,直连
-> CCTV
+#> CCTV
  - cctv.com,直连
  - cctvpic.com,直连
  - livechina.com,直连
-> ChinaTelecom
+#> ChinaTelecom
  - 21cn.com,直连
-> DiDi
+#> DiDi
  - didialift.com,直连
  - didiglobal.com,直连
  - udache.com,直连
-> HunanTV
+#> HunanTV
  - hitv.com,直连
  - mgtv.com,直连
-> iQiyi
+#> iQiyi
  - iqiyi.com,直连
  - iqiyipic.com,直连
  - 71.am,直连
-> JD
+#> JD
  - jd.com,直连
  - jd.hk,直连
  - jdpay.com,直连
  - 360buyimg.com,直连
-> Kingsoft
+#> Kingsoft
  - iciba.com,直连
  - ksosoft.com,直连
-> Meitu
+#> Meitu
  - meitu.com,直连
  - meitudata.com,直连
  - meitustat.com,直连
  - meipai.com,直连
-> Meituan
+#> Meituan
  - dianping.com,直连
  - dpfile.com,直连
  - meituan.com,直连
  - meituan.net,直连
-> MI
+#> MI
  - duokan.com,直连
  - mi.com,直连
  - mi-img.com,直连
@@ -101,26 +101,26 @@ DOMAIN-KEYWORD,icloud.com.akadns.net,直连
  - miwifi.com,直连
  - xiaomi.com,直连
  - xiaomi.net,直连
-> Microsoft
-microsoft.com,直连
-msecnd.net,直连
-office.com,直连
-office365.com,直连
-s-microsoft.com,直连
-windows.com,直连
+#> Microsoft
+ - microsoft.com,直连
+ - msecnd.net,直连
+ - office.com,直连
+ - office365.com,直连
+ - s-microsoft.com,直连
+ - windows.com,直连
  - visualstudio.com,直连
->> Microsoft Software Download
-DOMAIN,software-download.microsoft.com,直连
-DOMAIN-KEYWORD,-microsoft-com.akamaized.net,直连
->> OneDrive
-1drv.com,直连
-storage.live.com,直连
->> Outlook
+#>> Microsoft Software Download
+ - DOMAIN,software-download.microsoft.com,直连
+ - DOMAIN-KEYWORD,-microsoft-com.akamaized.net,直连
+#>> OneDrive
+ - 1drv.com,直连
+ - storage.live.com,直连
+#>> Outlook
  - hotmail.com,直连
  - outlook.com,直连
  - DOMAIN,outlook.office365.com,直连
  - DOMAIN,smtp.office365.com,直连
->> Windows Server Update Services
+#>> Windows Server Update Services
  - dl.delivery.mp.microsoft.com,直连
  - update.microsoft.com,直连
  - windowsupdate.com,直连
@@ -128,7 +128,7 @@ storage.live.com,直连
  - DOMAIN,download.microsoft.com,直连
  - DOMAIN,wustat.windows.com,直连
  - DOMAIN,ntservicepack.microsoft.com,直连
-> NetEase
+#> NetEase
  - USER-AGENT,NeteaseMusic*,直连
  - USER-AGENT,%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90*,直连
  - 163.com,直连
@@ -140,29 +140,29 @@ storage.live.com,直连
  - netease.com,直连
  - ydstatic.com,直连
  - youdao.com,直连
-> PayPal
+#> PayPal
  - USER-AGENT,PayPal*,直连
  - paypal.com,直连
  - paypal.me,直连
  - paypalobjects.com,直连
-> Sina
+#> Sina
  - sina.com,直连
  - weibo.com,直连
  - weibocdn.com,直连
-> Sohu
+#> Sohu
  - sohu.com,直连
  - sohucs.com,直连
  - sohu-inc.com,直连
  - v-56.com,直连
-> Sogo
+#> Sogo
  - sogo.com,直连
  - sogou.com,直连
  - sogoucdn.com,直连
-> Steam
+#> Steam
  - steamcontent.com,直连
  - steampowered.com,直连
  - steamstatic.com,直连
-> Tencent
+#> Tencent
  - USER-AGENT,MicroMessenger*,直连
  - USER-AGENT,WeChat*,直连
  - USER-AGENT,%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1*,直连
@@ -191,7 +191,7 @@ storage.live.com,直连
  - IP-CIDR,129.226.107.244/32,直连
  - IP-CIDR,182.254.116.0/24,直连
  - IP-CIDR,203.205.254.0/23,直连
-> Content Delivery Network
+#> Content Delivery Network
  - ccgslb.com,直连
  - ccgslb.net,直连
  - chinanetcenter.com,直连
@@ -199,7 +199,7 @@ storage.live.com,直连
  - ourdvs.com,直连
  - staticdn.net,直连
  - wangsu.com,直连
-> IP Query
+#> IP Query
  - ipip.net,直连
  - ip.la,直连
  - ip.sb,直连
@@ -210,11 +210,11 @@ storage.live.com,直连
  - whatismyip.com,直连
  - DOMAIN,ip.istatmenus.app,直连
  - DOMAIN,sms.imagetasks.com,直连
-> Speed Test
+#> Speed Test
 speedtest.net,直连
  - netspeedtestmaster.com,直连
  - DOMAIN,speedtest.macpaw.com,直连
-> Private Tracker
+#> Private Tracker
  - acg.rip,直连
  - animebytes.tv,直连
  - awesome-hd.me,直连
@@ -247,7 +247,7 @@ speedtest.net,直连
  - springsunday.net,直连
  - tjupt.org,直连
  - totheglory.im,直连
-> Other
+#> Other
  - cn,直连
  - 115.com,直连
  - 360in.com,直连
