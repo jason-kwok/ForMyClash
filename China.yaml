@@ -103,19 +103,19 @@ payload:
   - xiaomi.com,直连
   - xiaomi.net,直连
  # Microsoft
-microsoft.com,直连
-msecnd.net,直连
-office.com,直连
-office365.com,直连
-s-microsoft.com,直连
-windows.com,直连
+  - microsoft.com,直连
+  - msecnd.net,直连
+  - office.com,直连
+  - office365.com,直连
+  - s-microsoft.com,直连
+  - windows.com,直连
   - visualstudio.com,直连
 > # Microsoft Software Download
-DOMAIN,software-download.microsoft.com,直连
-DOMAIN-KEYWORD,-microsoft-com.akamaized.net,直连
+  - DOMAIN,software-download.microsoft.com,直连
+  - DOMAIN-KEYWORD,-microsoft-com.akamaized.net,直连
 > # OneDrive
-1drv.com,直连
-storage.live.com,直连
+  - 1drv.com,直连
+  - storage.live.com,直连
 > # Outlook
   - hotmail.com,直连
   - outlook.com,直连
