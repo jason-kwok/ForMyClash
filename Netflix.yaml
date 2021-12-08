@@ -1,5 +1,5 @@
+payload:
 # Netflix
- - USER-AGENT,Argo*
  - PROCESS-NAME,com.netflix.mediaclient
  - DOMAIN-SUFFIX,netflix.com
  - DOMAIN-SUFFIX,netflix.net
