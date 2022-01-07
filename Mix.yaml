@@ -5,6 +5,7 @@ allow-lan: true
 mode: Rule
 log-level: info
 external-controller: 0.0.0.0:9090
+#Update time: 2021-01-07
 
 dns:
   enable: true
