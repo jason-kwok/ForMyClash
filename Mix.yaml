@@ -5,7 +5,7 @@ allow-lan: true
 mode: Rule
 log-level: info
 external-controller: 0.0.0.0:9090
-#Update time: 2021-01-07
+#Update time: 20210107
 
 dns:
   enable: true
@@ -3832,4 +3832,4 @@ rules:
 #- URL-REGEX,(.+\.|^)(360|so|qihoo|360safe|qhimg|360totalsecurity|yunpan)\.(cn|com),DIRECT
 #- URL-REGEX,(.+\.)?(torrent|announce\.php\?passkey=|tracker|BitTorrent|bt_key|ed2k|find_node|get_peers|info_hash|magnet:|peer_id=|sandai|Thunder|XLLiveUD|xunlei)(\..+)?,DIRECT
 - GEOIP,CN,国内网站或资源
-#- MATCH,其它规则外
+- MATCH,其它规则外
