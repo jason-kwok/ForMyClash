@@ -1,0 +1,3950 @@
+#Update on 2022-01-11
+
+port: 7890
+socks-port: 7891
+redir-port: 7892
+allow-lan: true
+mode: Rule
+log-level: info
+external-controller: 0.0.0.0:9090
+
+dns:
+  enable: true
+  # listen: 0.0.0.0:53
+  ipv6: false # 当此选项为 false 时, AAAA 请求将返回空
+
+  # 以下填写的 DNS 服务器将会被用来解析 DNS 服务的域名
+  # 仅填写 DNS 服务器的 IP 地址
+  default-nameserver:
+    - 223.5.5.5
+    #- 1.2.4.8
+    #- 114.114.114.114
+    - 119.29.29.29
+  enhanced-mode: redir-host # 或 fake-ip
+  fake-ip-range: 198.18.0.1/16 # Fake IP 地址池 (CIDR 形式)
+  # use-hosts: true # 查询 hosts 并返回 IP 记录
+
+  # 在以下列表的域名将不会被解析为 fake ip，这些域名相关的解析请求将会返回它们真实的 IP 地址
+  # fake-ip-filter:
+  #   - '*.lan'
+  #   - localhost.ptlogin2.qq.com
+
+  # 支持 UDP / TCP / DoT / DoH 协议的 DNS 服务，可以指明具体的连接端口号。
+  # 所有 DNS 请求将会直接发送到服务器，不经过任何代理。
+  # Clash 会使用最先获得的解析记录回复 DNS 请求
+  nameserver:
+    #如果你有自建的DNS服务器或专用网络的DNS服务器可在托管链接添加如 &dns=9.9.9.9 参数（9.9.9.9替换成你要自定义的DNS，注意，此DNS必须有效，否则将导致出错无法使用），自定义DNS将出现以下方
+    
+    #默认提供DoT / DoH 协议的DNS
+    - https://223.5.5.5/dns-query
+    #- https://doh.pub/dns-query
+    #- tls://223.6.6.6
+    #- https://dns.alidns.com/dns-query
+    #- https://v6.rubyfish.cn/dns-query
+    #- https://rubyfish.cn/dns-query
+    - https://223.6.6.6/dns-query
+    #- https://doh.360.cn/dns-query
+    #- tls://223.5.5.5
+    #- tls://dns.alidns.com
+    #- tls://13800000000.rubyfish.cn
+    #- tls://dot.360.cn
+    #- 223.5.5.5
+    #- 119.29.29.29
+    
+  # 当 fallback 参数被配置时, DNS 请求将同时发送至上方 nameserver 列表和下方 fallback 列表中配置的所有 DNS 服务器.
+  # 当解析得到的 IP 地址的地理位置不是 CN 时，clash 将会选用 fallback 中 DNS 服务器的解析结果。
+  fallback:
+    - https://1.0.0.1/dns-query
+    - https://8.8.4.4/dns-query
+    #- https://dns.google/dns-query
+    #- tls://8.8.4.4
+    #- https://cloudflare-dns.com/dns-query
+    #- https://1.1.1.1/dns-query
+    #- https://dns.twnic.tw/dns-query
+    #- tls://1.0.0.1
+    #- tls://dns.adguard.com:853
+
+  # 如果使用 nameserver 列表中的服务器解析的 IP 地址在下方列表中的子网中，则它们被认为是无效的，
+  # Clash 会选用 fallback 列表中配置 DNS 服务器解析得到的结果。
+  #
+  # 当 fallback-filter.geoip 为 true 且 IP 地址的地理位置为 CN 时，
+  # Clash 会选用 nameserver 列表中配置 DNS 服务器解析得到的结果。
+  #
+  # 当 fallback-filter.geoip 为 false, 如果解析结果在 fallback-filter.ipcidr 范围内，
+  # Clash 会选用 nameserver 列表中配置 DNS 服务器解析得到的结果。
+  #
+  # 采取以上逻辑进行域名解析是为了对抗 DNS 投毒攻击。
+  fallback-filter:
+    geoip: false
+    ipcidr:
+    # - 240.0.0.0/4
+
+proxies:
+  - name: BWHLA-T
+    type: trojan
+    udp: true
+    server: givesomelight.xyz
+    port: 443
+    password: givesomelight
+  - {name: BWHLA-V, server: 64.64.228.248, port: 29175, type: vmess, uuid: 5246bfea-abfe-6a39-748c-8debb6304219, alterId: 0, cipher: auto, tls: false, skip-cert-verify: false, udp: true}
+  - type: ss
+    server: i0gzcm-iepl.zhs.company
+    port: 27062
+    password: trpOr6
+    cipher: chacha20-ietf-poly1305
+    name: ❻SS.HK王者 [IEPL] [荐] [10] [NF*] [D+] [Yp]
+  - name: ⓪TJ.US空灵 [备用] [10] [NF*] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: klusr3.zhs.futbol
+    port: 2096
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: klusr3.zhs.futbol
+  - name: ❶gR.SG时光 [1] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: sg3bct.zhs.company
+    port: 443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: grpc
+    grpc-opts:
+      grpc-service-name: zhs
+  - name: ❶TJ.HK先锋 [荐] [1] [NF*] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: hkxf08.zhs.company
+    port: 2096
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hkxf08.zhs.company
+  - name: ❶TJ.SG时光 [0.8] [NF*] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: sg3bct.zhs.company
+    port: 2096
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: sg3bct.zhs.company
+  - name: ❶V2.HK奇点 [2] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hkqd2d.zhs.company
+    port: 2053
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkqd2d.zhs.company
+  - name: ❶V2.HK摄魂 [阿里云] [荐] [1] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hksh3t.zhs.company
+    port: 2096
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hksh3t.zhs.company
+  - name: ❶V2.HK流萤 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hkbnc2.zhs.company
+    port: 11400
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /216074fa
+    Host: hkbnc2.zhs.company
+  - name: ❶V2.HK灵魂 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hklhjk.zhs.company
+    port: 53999
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hklhjk.zhs.company
+  - name: ◈耗尽◈❶V2.US幻象 ⚭ 2号恢复
+    type: vmess
+    udp: true
+    server: ushxuq.zhs.company
+    port: 2087
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: ushxuq.zhs.company
+  - name: ❶V2.US贝塔 [HBO] [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: usbt5n.zhs.company
+    port: 2087
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /110fcc6c
+    Host: usbt5n.zhs.company
+  - name: ❷TJ.HK天机 [荐] [1] [NF] [D+]
+    type: trojan
+    udp: true
+    server: wzhkb3.zhs.company
+    port: 2083
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: wzhkb3.zhs.company
+  - name: ❷TJ.HK暗影 [将下线] [1] [NF] [D+]
+    type: trojan
+    udp: true
+    server: hkhgc3.zhs.company
+    port: 2083
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hkhgc3.zhs.company
+  - name: ❖CN1❖❷TJ.HK铠甲 [TVB] [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: cm12ov.zhs.company
+    port: 35054
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hktkj9.zhs.company
+  - name: ❷TJ.HK铠甲 [TVB] [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: hktkj9.zhs.company
+    port: 2087
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hktkj9.zhs.company
+  - name: ❷TJ.SG黎明 [1.5] [NF*] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: sglmz9.zhs.company
+    port: 8443
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: sglmz9.zhs.company
+  - name: ❷V2.HK嘉禾 [阿里云] [1] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hkjh3r.zhs.company
+    port: 2053
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkjh3r.zhs.company
+  - name: ❷V2.HK安魂 [荐] [阿里云] [1] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hkah9e.zhs.company
+    port: 2087
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkah9e.zhs.company
+  - name: ❖CN1❖❷V2.HK铠甲 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: cm12ov.zhs.company
+    port: 35055
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hktkj9.zhs.company
+  - name: ❷V2.HK铠甲 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hktkj9.zhs.company
+    port: 2096
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hktkj9.zhs.company
+  - name: ❷V2.SG黎明 [1.5] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: sglmz9.zhs.company
+    port: 2096
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: sglmz9.zhs.company
+  - name: ❖CN1❖❷V2.US加州 [Hulu] [1]  [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: umhn5r.zhs.company
+    port: 30008
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /3de876ad
+    Host: usjzo0.zhs.company
+  - name: ❷V2.US加州 [Hulu] [1]  [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: usjzo0.zhs.company
+    port: 2053
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /3de876ad
+    Host: usjzo0.zhs.company
+  - name: ❷V2.US神像 [2] [荐] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: ussxhh.zhs.company
+    port: 2087
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: ussxhh.zhs.company
+  - name: ❖CN1❖❸H2.SG狮城 [1] [v6] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: cmbe3-vdn.zhs.company
+    port: 35049
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: h2
+    h2-opts:
+      path: /zhs
+  - name: ❸H2.SG狮城 [1] [v6] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: wttwz9.zhs.company
+    port: 8443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: h2
+    h2-opts:
+      path: /zhs
+  - name: ❖CN1❖❸TJ.HK刀锋 [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50008
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hgcdf6.zhs.company
+  - name: ❖CN2❖❸TJ.HK刀锋 [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: cmbe3-vdn.zhs.company
+    port: 35056
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hgcdf6.zhs.company
+  - name: ❸TJ.HK刀锋 [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: hgcdf6.zhs.company
+    port: 2083
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hgcdf6.zhs.company
+  - name: ❖CN1❖❸TJ.HK判官 [荐] [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: cmbe3-vdn.zhs.company
+    port: 35020
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hkbnx3.zhs.company
+  - name: ❸TJ.HK判官 [荐] [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: hkbnx3.zhs.company
+    port: 2083
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hkbnx3.zhs.company
+  - name: ❖CN1❖❸TJ.HK城寨 [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50008
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hktcz3.zhs.company
+  - name: ❖CN2❖❸TJ.HK城寨 [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: cmbe3-vdn.zhs.company
+    port: 35039
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hktcz3.zhs.company
+  - name: ❸TJ.HK城寨 [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: hktcz3.zhs.company
+    port: 8443
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hktcz3.zhs.company
+  - name: ❸TJ.US加州 [Hulu] [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: usjzo0.zhs.company
+    port: 2087
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: usjzo0.zhs.company
+  - name: ❸TJ.US川谱 [Hulu] [荐] [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: uscp5g.zhs.company
+    port: 2083
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: uscp5g.zhs.company
+  - name: ❖CN1❖❸V2.HK刀锋 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50007
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hgcdf6.zhs.company
+  - name: ❖CN2❖❸V2.HK刀锋 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: cmbe3-vdn.zhs.company
+    port: 35004
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hgcdf6.zhs.company
+  - name: ❸V2.HK刀锋 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hgcdf6.zhs.company
+    port: 2087
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hgcdf6.zhs.company
+  - name: ❖CN1❖❸V2.HK城寨 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50007
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hktcz3.zhs.company
+  - name: ❖CN2❖❸V2.HK城寨 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: cmbe3-vdn.zhs.company
+    port: 35038
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hktcz3.zhs.company
+  - name: ❸V2.HK城寨 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hktcz3.zhs.company
+    port: 2053
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hktcz3.zhs.company
+  - name: ❖CN1❖❸V2.HK天机 [荐] [1]  [NF] [D+]
+    type: vmess
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50015
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: wzhkb3.zhs.company
+  - name: ❸V2.HK天机 [荐] [1]  [NF] [D+]
+    type: vmess
+    udp: true
+    server: wzhkb3.zhs.company
+    port: 2087
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: wzhkb3.zhs.company
+  - name: ❖CN1❖❸V2.HK暗影 [将下线] [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: cmbe3-vdn.zhs.company
+    port: 35007
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkhgc3.zhs.company
+  - name: ❸V2.HK暗影 [将下线] [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: hkhgc3.zhs.company
+    port: 443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkhgc3.zhs.company
+  - name: ❸V2.SG烈焰 [荐] [1] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: sglyc6.zhs.company
+    port: 443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: sglyc6.zhs.company
+  - name: ❸V2.SG黑夜 [2] [v6] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: sghyi5.zhs.company
+    port: 2053
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: sghyi5.zhs.company
+  - name: ❸V2.US川谱 [Hulu] [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: uscp5g.zhs.company
+    port: 2053
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: uscp5g.zhs.company
+  - name: ❖CN1❖❸V2.US猎鹰 [Hulu] [HBO] [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: umhn5r.zhs.company
+    port: 30001
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: usly2m.zhs.company
+  - name: ❸V2.US猎鹰 [Hulu] [HBO] [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: usly2m.zhs.company
+    port: 443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: usly2m.zhs.company
+  - name: ◈耗尽◈❸V2.US玫瑰 ⚭ 28号恢复
+    type: vmess
+    udp: true
+    server: usmg3r.zhs.company
+    port: 443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: usmg3r.zhs.company
+  - name: ❖CN1❖❸V2.US胜地 [0.5] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: umhn5r.zhs.company
+    port: 30004
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: ussdh7.zhs.company
+  - name: ❸V2.US胜地 [0.5] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: ussdh7.zhs.company
+    port: 443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: ussdh7.zhs.company
+  - name: ❖CN1❖❻H2.HK九龙 [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: cm2tw-odn.zhs.company
+    port: 39044
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: h2
+    h2-opts:
+      path: /zhs
+  - name: ❻H2.HK九龙 [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: hkbnjl0.zhs.company
+    port: 2096
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: h2
+    h2-opts:
+      path: /zhs
+  - name: ❖CN1❖❻H2.HK判官 [荐] [2] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: cm2tw-odn.zhs.company
+    port: 39044
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: h2
+    h2-opts:
+      path: /zhs
+  - name: ❻H2.HK判官 [荐] [2] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hkbnx3.zhs.company
+    port: 2053
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: h2
+    h2-opts:
+      path: /zhs
+  - name: ❖CN1❖❻H2.HK城寨 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: cmbe3-vdn.zhs.company
+    port: 35046
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: h2
+    h2-opts:
+      path: /zhs
+  - name: ❻H2.HK城寨 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hktcz3.zhs.company
+    port: 2083
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: h2
+    h2-opts:
+      path: /zhs
+  - name: ❖CN1❖❻TJ.HK九龙 [荐] [1] [NF] [D+]
+    type: trojan
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50004
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hkbnjl0.zhs.company
+  - name: ❖CN2❖❻TJ.HK九龙 [荐] [1] [NF] [D+]
+    type: trojan
+    udp: true
+    server: cmbe3-vdn.zhs.company
+    port: 35030
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hkbnjl0.zhs.company
+  - name: ❻TJ.HK九龙 [荐] [1] [NF] [D+]
+    type: trojan
+    udp: true
+    server: hkbnjl0.zhs.company
+    port: 2087
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hkbnjl0.zhs.company
+  - name: ❖CN1❖❻TJ.HK契约 [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50014
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hkqy7u.zhs.company
+  - name: ❻TJ.HK契约 [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: hkqy7u.zhs.company
+    port: 2087
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hkqy7u.zhs.company
+  - name: ❖CN1❖❻TJ.HK波澜 [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: umhn5r.zhs.company
+    port: 39007
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hkbl3n.zhs.company
+  - name: ❻TJ.HK波澜 [1] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: hkbl3n.zhs.company
+    port: 443
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: hkbl3n.zhs.company
+  - name: ❻TJ.HK王者 [IEPL] [10] [NF*] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 58443
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: i0gzcm-iepl.zhs.company
+  - name: ❻TJ.SG黑夜 [2] [v6] [NF] [D+] [Yp]
+    type: trojan
+    udp: true
+    server: sghyi5.zhs.company
+    port: 2087
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: sghyi5.zhs.company
+  - name: ❖CN1❖❻TJ.US猎鹰 [Hulu] [HBO] [1] [NF] [D+]
+    type: trojan
+    udp: true
+    server: umhn5r.zhs.company
+    port: 30002
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: usly2m.zhs.company
+  - name: ❻TJ.US猎鹰 [Hulu] [HBO] [1] [NF] [D+]
+    type: trojan
+    udp: true
+    server: usly2m.zhs.company
+    port: 2053
+    password: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    skip-cert-verify: false
+    sni: usly2m.zhs.company
+  - name: ❻V2.HKG王者 [游戏] [8] [v6] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: wzhki6.zhs.company
+    port: 2096
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: wzhki6.zhs.company
+  - name: ❖CN1❖❻V2.HK九龙 [荐] [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50003
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkbnjl0.zhs.company
+  - name: ❖CN2❖❻V2.HK九龙 [荐] [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: cm2tw-odn.zhs.company
+    port: 39041
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkbnjl0.zhs.company
+  - name: ❖CN3❖❻V2.HK九龙 [荐] [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: cmbe3-vdn.zhs.company
+    port: 35001
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkbnjl0.zhs.company
+  - name: ❻V2.HK九龙 [荐] [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: hkbnjl0.zhs.company
+    port: 443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkbnjl0.zhs.company
+  - name: ❖CN1❖❻V2.HK判官 [荐] [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50003
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkbnx3.zhs.company
+  - name: ❖CN2❖❻V2.HK判官 [荐] [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: cm2tw-odn.zhs.company
+    port: 39041
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkbnx3.zhs.company
+  - name: ❻V2.HK判官 [荐] [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hkbnx3.zhs.company
+    port: 2096
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkbnx3.zhs.company
+  - name: ❖CN1❖❻V2.HK契约 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50013
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkqy7u.zhs.company
+  - name: ❻V2.HK契约 [1] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hkqy7u.zhs.company
+    port: 2083
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkqy7u.zhs.company
+  - name: ❖CN1❖❻V2.HK波澜 [2] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: umhn5r.zhs.company
+    port: 39006
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkbl3n.zhs.company
+  - name: ❻V2.HK波澜 [2] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: hkbl3n.zhs.company
+    port: 2096
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: hkbl3n.zhs.company
+  - name: ❖CN1❖❻V2.SG星岛 [5] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50011
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: sgali-rd6.zhs.company
+  - name: ❻V2.SG星岛 [5] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: sgali-rd6.zhs.company
+    port: 2096
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: sgali-rd6.zhs.company
+  - name: ❖CN1❖❻V2.SG狮城 [1] [v6] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: i0gzcm-iepl.zhs.company
+    port: 50009
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: wttwz9.zhs.company
+  - name: ❖CN2❖❻V2.SG狮城 [1] [v6] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: cmbe3-vdn.zhs.company
+    port: 35048
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: wttwz9.zhs.company
+  - name: ❻V2.SG狮城 [1] [v6] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: wttwz9.zhs.company
+    port: 443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /zhs
+    Host: wttwz9.zhs.company
+  - name: ❻V2.US无量 [下载专用] [0] [NF*] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: uswlwz.zhs.company
+    port: 443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /d40d345b
+    Host: uswlwz.zhs.company
+  - name: ❖CN1❖❻V2.US猎鹰 [Hulu] [HBO] [荐] [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: umhn5r.zhs.company
+    port: 30003
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /24e0985d
+    Host: usly2m.zhs.company
+  - name: ❻V2.US猎鹰 [Hulu] [HBO] [荐] [1] [NF] [D+]
+    type: vmess
+    udp: true
+    server: usly2m.zhs.company
+    port: 8443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /24e0985d
+    Host: usly2m.zhs.company
+  - name: ❖CN1❖❻V2.US王者 II [Hulu] [1] [v6] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: umhn5r.zhs.company
+    port: 39026
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /f59ba2ec
+    Host: ussxm9.zhs.company
+  - name: ❻V2.US王者 II [Hulu] [1] [v6] [NF] [D+] [Yp]
+    type: vmess
+    udp: true
+    server: ussxm9.zhs.company
+    port: 8443
+    uuid: 0dbbe1fa-319c-3d22-8294-2b4de07434aa
+    alterId: 0
+    cipher: auto
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /f59ba2ec
+    Host: ussxm9.zhs.company
+  - name: 🇭🇰 Hong Kong 01
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "40420"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 02
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "46199"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 03
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "43367"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 04
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "46376"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 05
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "44000"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 06
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42950"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 07
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42280"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 08
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "46890"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 09
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42764"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 10
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "45929"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 11
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "47291"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 12
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "43489"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 13
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "47192"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 14
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "43642"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 15
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42458"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 16
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "41169"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 17
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "40763"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 18
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "47380"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 19
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42251"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 20 [Premium]
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "45022"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 21 [Premium]
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "40054"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 22 [Premium]
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "41172"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇰 Hong Kong 23 IPv4 Stream
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42793"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 01
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "47140"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 02
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "46772"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 03
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "44953"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 04 [Premium]
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "46880"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 05 [Premium]
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "40835"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 06 [Premium]
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "42406"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 07 [Premium]
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "47297"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 08
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "45982"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 09
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "40508"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 10
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "43615"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 11
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "44478"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 12
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "47227"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 13
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "39776"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 14 [Premium]
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "47418"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 15 [Premium]
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "43014"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 16 IPv4 Stream
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "40410"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇺🇸 United States 17 IPv4 Stream
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "42037"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 01
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "40168"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 02
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "40778"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 03
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "42967"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 04
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "41408"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 05
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "42358"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 06
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "46603"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 07
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "45428"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 08
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "46284"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 09
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "45671"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 10
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "46491"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 11
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "42588"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 12
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "43337"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 13
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "44315"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 14
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "46395"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 15
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "45431"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 16
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "42775"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 17
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "44219"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 18
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "42350"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 19
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "46312"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 20
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "43817"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 21
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "39976"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 22 [Premium]
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "41683"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇯🇵 Japan 23 [Premium]
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "41376"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇳🇱 Netherlands
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "46625"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇷🇺 Russia St.Peterburg
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "45438"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇷🇺 Russia Moscow
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "45391"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇩🇪 Germany 1
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "45752"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇩🇪 Germany 2
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "40484"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇫🇷 France
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "44073"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇬🇧 United Kingdom 1
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "46644"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇬🇧 United Kingdom 2
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "43214"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇬🇧 United Kingdom 3
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "43962"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇪 Sweden
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "40001"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇧🇬 Bulgaria
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "39818"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇦🇹 Austria
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "41925"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇮🇪 Ireland 1
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "43804"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇮🇪 Ireland 2
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "42372"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇮🇱 Israel
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "40377"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇮🇹 Italy
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "46881"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇭🇺 Hungary
+    type: ss
+    server: sfgzqps.isfrcx.xyz
+    port: "42552"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇰🇷 Korea 1
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "40810"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇰🇷 Korea 2
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "41053"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇰🇷 Korea 3 [Premium]
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "45747"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇰🇷 Korea 4
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "47032"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇨🇳 Taiwan 1
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42618"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇨🇳 Taiwan 2
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "46220"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇨🇳 Taiwan 3
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "47210"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇨🇳 Taiwan 4
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "41586"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇨🇳 Taiwan 5
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "43156"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇨🇦 Canada 1
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "46490"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇨🇦 Canada 2
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "44745"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇦🇺 Australia Sydney 01 [Premium]
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "40351"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇦🇺 Australia Sydney 02
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "45994"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇮🇳 India 1
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "41958"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇮🇳 India 2
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42401"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇮🇩 Indonesia 01
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "43553"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇧🇷 Brazil 01
+    type: ss
+    server: hxhvnig.amokmk.xyz
+    port: "45793"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 01
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "41209"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 02
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42324"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 03
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "43835"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 04
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "40672"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 05
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42625"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 06
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "45709"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 07
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42912"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 08
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "40386"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 09
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "40982"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 10
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "40419"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 11 [Premium]
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "42940"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+  - name: 🇸🇬 Singapore 12 IPv4 Stream
+    type: ss
+    server: iguvmbs.isfrcx.xyz
+    port: "43400"
+    cipher: chacha20-ietf-poly1305
+    password: e1c4e9f36c34461c
+    udp: true
+    protocol: origin
+
+proxy-groups:
+
+  - name: Proxy
+    type: select
+    proxies:
+    - Nexitally-HK
+    - Nexitally-US
+    - Auto-ZHS-HK
+
+  - name: Disney+
+    type: select
+    proxies:
+    - 🇭🇰 Hong Kong 01
+    - 🇭🇰 Hong Kong 02
+    - 🇭🇰 Hong Kong 03
+    - 🇭🇰 Hong Kong 04
+    - 🇭🇰 Hong Kong 05
+    - 🇭🇰 Hong Kong 06
+    - 🇭🇰 Hong Kong 07
+    - 🇭🇰 Hong Kong 08
+    - 🇭🇰 Hong Kong 09
+    - 🇭🇰 Hong Kong 10
+    - 🇭🇰 Hong Kong 11
+    - 🇭🇰 Hong Kong 12
+    - 🇭🇰 Hong Kong 13
+    - 🇭🇰 Hong Kong 14
+    - 🇭🇰 Hong Kong 15
+    - 🇭🇰 Hong Kong 16
+    - 🇭🇰 Hong Kong 17
+    - 🇭🇰 Hong Kong 18
+    - 🇭🇰 Hong Kong 19
+    - 🇭🇰 Hong Kong 23 IPv4 Stream
+    - 🇺🇸 United States 01
+    - 🇺🇸 United States 02
+    - 🇺🇸 United States 03
+    - 🇺🇸 United States 08
+    - 🇺🇸 United States 09
+    - 🇺🇸 United States 10
+    - 🇺🇸 United States 11
+    - 🇺🇸 United States 12
+    - 🇺🇸 United States 13
+    - 🇺🇸 United States 16 IPv4 Stream
+    - 🇺🇸 United States 17 IPv4 Stream
+    - 🇺🇸 United States 17 IPv4 Stream
+    - 🇯🇵 Japan 01
+    - 🇯🇵 Japan 02
+    - 🇯🇵 Japan 03
+    - 🇯🇵 Japan 04
+    - 🇯🇵 Japan 05
+    - 🇯🇵 Japan 06
+    - 🇯🇵 Japan 07
+    - 🇯🇵 Japan 08
+    - 🇯🇵 Japan 09
+    - 🇯🇵 Japan 10
+    - 🇯🇵 Japan 11
+    - 🇯🇵 Japan 12
+    - 🇯🇵 Japan 13
+    - 🇯🇵 Japan 14
+    - 🇯🇵 Japan 15
+    - 🇯🇵 Japan 16
+    - 🇯🇵 Japan 17
+    - 🇯🇵 Japan 18
+    - 🇯🇵 Japan 19
+    - 🇯🇵 Japan 20
+    - 🇯🇵 Japan 21
+    - 🇨🇳 Taiwan 1
+    - 🇨🇳 Taiwan 2
+    - 🇨🇳 Taiwan 3
+    - 🇨🇳 Taiwan 4
+    - 🇨🇳 Taiwan 5
+    - 🇸🇬 Singapore 01
+    - 🇸🇬 Singapore 02
+    - 🇸🇬 Singapore 03
+    - 🇸🇬 Singapore 04
+    - 🇸🇬 Singapore 05
+    - 🇸🇬 Singapore 06
+    - 🇸🇬 Singapore 07
+    - 🇸🇬 Singapore 08
+    - 🇸🇬 Singapore 09
+    - 🇸🇬 Singapore 10
+    - 🇸🇬 Singapore 12 IPv4 Stream
+
+
+  - name: Netflix
+    type: select
+    proxies:
+    - BWHLA-V
+    - Nexitally-HK
+    - Nexitally-US
+    - Nexitally-TW
+    - Nexitally-SG
+    - Nexitally-JP
+
+  - name: LinkedIn
+    type: select
+    proxies:
+    - Nexitally-HK
+    - Nexitally-US
+    - Nexitally-TW
+    - Nexitally-SG
+    - BWHLA-T
+
+  - name: Microsoft
+    type: select
+    proxies:
+    - Proxy
+    - DIRECT
+
+  - name: Apple
+    type: select
+    proxies:
+    - Proxy
+    - DIRECT
+
+  - name: 其他国外流媒体
+    type: select
+    proxies:
+    - Proxy
+
+  - name: 爱奇艺等国内流媒体
+    type: select
+    proxies:
+    - DIRECT
+
+  - name: 国内网站或资源
+    type: select
+    proxies:
+    - DIRECT
+
+  - name: 其它规则外
+    type: select
+    proxies:
+    - Proxy
+
+  - name: Nexitally-HK
+    type: select
+    interval: 300
+    proxies:
+    - 🇭🇰 Hong Kong 01
+    - 🇭🇰 Hong Kong 02
+    - 🇭🇰 Hong Kong 03
+    - 🇭🇰 Hong Kong 04
+    - 🇭🇰 Hong Kong 05
+    - 🇭🇰 Hong Kong 06
+    - 🇭🇰 Hong Kong 07
+    - 🇭🇰 Hong Kong 08
+    - 🇭🇰 Hong Kong 09
+    - 🇭🇰 Hong Kong 10
+    - 🇭🇰 Hong Kong 11
+    - 🇭🇰 Hong Kong 12
+    - 🇭🇰 Hong Kong 13
+    - 🇭🇰 Hong Kong 14
+    - 🇭🇰 Hong Kong 15
+    - 🇭🇰 Hong Kong 16
+    - 🇭🇰 Hong Kong 17
+    - 🇭🇰 Hong Kong 18
+    - 🇭🇰 Hong Kong 19
+    - 🇭🇰 Hong Kong 20 [Premium]
+    - 🇭🇰 Hong Kong 21 [Premium]
+    - 🇭🇰 Hong Kong 22 [Premium]
+    - 🇭🇰 Hong Kong 23 IPv4 Stream
+
+  - name: Nexitally-US
+    type: select
+    interval: 300
+    proxies:
+    - 🇺🇸 United States 01
+    - 🇺🇸 United States 02
+    - 🇺🇸 United States 03
+    - 🇺🇸 United States 04 [Premium]
+    - 🇺🇸 United States 05 [Premium]
+    - 🇺🇸 United States 06 [Premium]
+    - 🇺🇸 United States 07 [Premium]
+    - 🇺🇸 United States 08
+    - 🇺🇸 United States 09
+    - 🇺🇸 United States 10
+    - 🇺🇸 United States 11
+    - 🇺🇸 United States 12
+    - 🇺🇸 United States 13
+    - 🇺🇸 United States 14 [Premium]
+    - 🇺🇸 United States 15 [Premium]
+    - 🇺🇸 United States 16 IPv4 Stream
+    - 🇺🇸 United States 17 IPv4 Stream
+
+  - name: Nexitally-TW
+    type: select
+    interval: 300
+    proxies:
+    - 🇨🇳 Taiwan 1
+    - 🇨🇳 Taiwan 2
+    - 🇨🇳 Taiwan 3
+    - 🇨🇳 Taiwan 4
+    - 🇨🇳 Taiwan 5
+
+  - name: Nexitally-SG
+    type: select
+    interval: 300
+    proxies:
+    - 🇸🇬 Singapore 01
+    - 🇸🇬 Singapore 02
+    - 🇸🇬 Singapore 03
+    - 🇸🇬 Singapore 04
+    - 🇸🇬 Singapore 05
+    - 🇸🇬 Singapore 06
+    - 🇸🇬 Singapore 07
+    - 🇸🇬 Singapore 08
+    - 🇸🇬 Singapore 09
+    - 🇸🇬 Singapore 10
+    - 🇸🇬 Singapore 11 [Premium]
+    - 🇸🇬 Singapore 12 IPv4 Stream
+
+  - name: Nexitally-JP
+    type: select
+    interval: 300
+    proxies:
+    - 🇯🇵 Japan 01
+    - 🇯🇵 Japan 02
+    - 🇯🇵 Japan 03
+    - 🇯🇵 Japan 04
+    - 🇯🇵 Japan 05
+    - 🇯🇵 Japan 06
+    - 🇯🇵 Japan 07
+    - 🇯🇵 Japan 08
+    - 🇯🇵 Japan 09
+    - 🇯🇵 Japan 10
+    - 🇯🇵 Japan 11
+    - 🇯🇵 Japan 12
+    - 🇯🇵 Japan 13
+    - 🇯🇵 Japan 14
+    - 🇯🇵 Japan 15
+    - 🇯🇵 Japan 16
+    - 🇯🇵 Japan 17
+    - 🇯🇵 Japan 18
+    - 🇯🇵 Japan 19
+    - 🇯🇵 Japan 20
+    - 🇯🇵 Japan 21
+    - 🇯🇵 Japan 22 [Premium]
+    - 🇯🇵 Japan 23 [Premium]
+
+  - name: Auto-ZHS-HK
+    type: url-test
+    url: 'https://www.bing.com'
+    interval: 300
+    proxies:
+    - ❻SS.HK王者 [IEPL] [荐] [10] [NF*] [D+] [Yp]
+    - ❶V2.HK摄魂 [阿里云] [荐] [1] [NF*] [D+] [Yp]
+    - ❶V2.HK灵魂 [1] [NF] [D+] [Yp]
+    - ❷TJ.HK天机 [荐] [1] [NF] [D+]
+    - ❷TJ.HK暗影 [将下线] [1] [NF] [D+]
+    - ❖CN1❖❷TJ.HK铠甲 [TVB] [1] [NF] [D+] [Yp]
+    - ❷V2.HK安魂 [荐] [阿里云] [1] [NF*] [D+] [Yp]
+    - ❖CN1❖❷V2.HK铠甲 [1] [NF] [D+] [Yp]
+    - ❷V2.HK铠甲 [1] [NF] [D+] [Yp]
+    - ❖CN1❖❸TJ.HK刀锋 [1] [NF] [D+] [Yp]
+    - ❸TJ.HK刀锋 [1] [NF] [D+] [Yp]
+    - ❖CN1❖❸TJ.HK判官 [荐] [1] [NF] [D+] [Yp]
+    - ❸TJ.HK判官 [荐] [1] [NF] [D+] [Yp]
+    - ❖CN1❖❸TJ.HK城寨 [1] [NF] [D+] [Yp]
+    - ❖CN2❖❸V2.HK城寨 [1] [NF] [D+] [Yp]
+    - ❸V2.HK城寨 [1] [NF] [D+] [Yp]
+    - ❖CN1❖❸V2.HK天机 [荐] [1]  [NF] [D+]
+    - ❸V2.HK天机 [荐] [1]  [NF] [D+]
+    - ❖CN1❖❸V2.HK暗影 [将下线] [1] [NF] [D+]
+    - ❸V2.HK暗影 [将下线] [1] [NF] [D+]
+    - ❖CN1❖❻H2.HK九龙 [1] [NF] [D+]
+    - ❻H2.HK九龙 [1] [NF] [D+]
+    - ❖CN1❖❻H2.HK城寨 [1] [NF] [D+] [Yp]
+    - ❻H2.HK城寨 [1] [NF] [D+] [Yp]
+    - ❖CN1❖❻TJ.HK九龙 [荐] [1] [NF] [D+]
+    - ❖CN2❖❻TJ.HK九龙 [荐] [1] [NF] [D+]
+    - ❻TJ.HK九龙 [荐] [1] [NF] [D+]
+    - ❖CN1❖❻TJ.HK契约 [1] [NF] [D+] [Yp]
+    - ❻TJ.HK契约 [1] [NF] [D+] [Yp]
+    - ❖CN1❖❻TJ.HK波澜 [1] [NF] [D+] [Yp]
+    - ❻TJ.HK波澜 [1] [NF] [D+] [Yp]
+    - ❻TJ.HK王者 [IEPL] [10] [NF*] [D+] [Yp]
+    - ❖CN1❖❻V2.HK契约 [1] [NF] [D+] [Yp]
+    - ❻V2.HK契约 [1] [NF] [D+] [Yp]
+    - ❖CN1❖❻V2.HK波澜 [2] [NF] [D+] [Yp]
+    - ❻V2.HK波澜 [2] [NF] [D+] [Yp]
+
+rules:
+#> Apple
+- DOMAIN-SUFFIX,aaplimg.com,Apple
+- DOMAIN-SUFFIX,Apple.co,Apple
+- DOMAIN-SUFFIX,Apple.com,Apple
+- DOMAIN-SUFFIX,appstore.com,Apple
+- DOMAIN-SUFFIX,cdn-Apple.com,Apple
+- DOMAIN-SUFFIX,crashlytics.com,Apple
+- DOMAIN-SUFFIX,icloud.com,Apple
+- DOMAIN-SUFFIX,icloud-content.com,Apple
+- DOMAIN-SUFFIX,me.com,Apple
+- DOMAIN-SUFFIX,mzstatic.com,Apple
+- DOMAIN,www-cdn.icloud.com.akadns.net,Apple
+- IP-CIDR,17.0.0.0/8,Apple
+
+#> Microsoft
+- DOMAIN-SUFFIX,1drv.com,Microsoft
+- DOMAIN-SUFFIX,aadrm.com,Microsoft
+- DOMAIN-SUFFIX,acompli.com,Microsoft
+- DOMAIN-SUFFIX,acompli.net,Microsoft
+- DOMAIN-SUFFIX,aka.ms,Microsoft
+- DOMAIN-SUFFIX,akadns.net,Microsoft
+- DOMAIN-SUFFIX,aspnetcdn.com,Microsoft
+- DOMAIN-SUFFIX,assets-yammer.com,Microsoft
+- DOMAIN-SUFFIX,azure.cn,Microsoft
+- DOMAIN-SUFFIX,azure.com,Microsoft
+- DOMAIN-SUFFIX,azure.net,Microsoft
+- DOMAIN-SUFFIX,azureedge.net,Microsoft
+- DOMAIN-SUFFIX,azurerms.com,Microsoft
+- DOMAIN-SUFFIX,bing.com,Microsoft
+- DOMAIN-SUFFIX,bing.net,Microsoft
+- DOMAIN-SUFFIX,cloudapp.net,Microsoft
+- DOMAIN-SUFFIX,cloudappsecurity.com,Microsoft
+- DOMAIN-SUFFIX,docs.com,Microsoft
+- DOMAIN-SUFFIX,edgesuite.net,Microsoft
+- DOMAIN-SUFFIX,fabric.io,Microsoft
+- DOMAIN-SUFFIX,gfx.ms,Microsoft
+- DOMAIN-SUFFIX,hotmail.com,Microsoft
+- DOMAIN-SUFFIX,live.com,Microsoft
+- DOMAIN-SUFFIX,live.net,Microsoft
+- DOMAIN-SUFFIX,livefilestore.com,Microsoft
+- DOMAIN-SUFFIX,lync.com,Microsoft
+- DOMAIN-SUFFIX,mesh.com,Microsoft
+- DOMAIN-SUFFIX,microsoft-tst.com,Microsoft
+- DOMAIN-SUFFIX,microsoft.com,Microsoft
+- DOMAIN-SUFFIX,microsoftonline.com,Microsoft
+- DOMAIN-SUFFIX,msappproxy.net,Microsoft
+- DOMAIN-SUFFIX,msauth.net,Microsoft
+- DOMAIN-SUFFIX,msauthimages.net,Microsoft
+- DOMAIN-SUFFIX,msecnd.net,Microsoft
+- DOMAIN-SUFFIX,msedge.net,Microsoft
+- DOMAIN-SUFFIX,msft.net,Microsoft
+- DOMAIN-SUFFIX,msftauth.net,Microsoft
+- DOMAIN-SUFFIX,msftauthimages.net,Microsoft
+- DOMAIN-SUFFIX,msftconnecttest.com,Microsoft
+- DOMAIN-SUFFIX,msftidentity.com,Microsoft
+- DOMAIN-SUFFIX,msidentity.com,Microsoft
+- DOMAIN-SUFFIX,msn.com,Microsoft
+- DOMAIN-SUFFIX,msocdn.com,Microsoft
+- DOMAIN-SUFFIX,msocsp.com,Microsoft
+- DOMAIN-SUFFIX,mstea.ms,Microsoft
+- DOMAIN-SUFFIX,o365weve.com,Microsoft
+- DOMAIN-SUFFIX,oaspapps.com,Microsoft
+- DOMAIN-SUFFIX,office.com,Microsoft
+- DOMAIN-SUFFIX,office.net,Microsoft
+- DOMAIN-SUFFIX,office365.com,Microsoft
+- DOMAIN-SUFFIX,officeppe.net,Microsoft
+- DOMAIN-SUFFIX,omniroot.com,Microsoft
+- DOMAIN-SUFFIX,onedrive.com,Microsoft
+- DOMAIN-SUFFIX,onenote.com,Microsoft
+- DOMAIN-SUFFIX,onenote.net,Microsoft
+- DOMAIN-SUFFIX,onestore.ms,Microsoft
+- DOMAIN-SUFFIX,onmicrosoft.com,Microsoft
+- DOMAIN-SUFFIX,outlook.com,Microsoft
+- DOMAIN-SUFFIX,outlookgroups.ms,Microsoft
+- DOMAIN-SUFFIX,outlookmobile.com,Microsoft
+- DOMAIN-SUFFIX,phonefactor.net,Microsoft
+- DOMAIN-SUFFIX,public-trust.com,Microsoft
+- DOMAIN-SUFFIX,s-microsoft.com,Microsoft
+- DOMAIN-SUFFIX,sfbassets.com,Microsoft
+- DOMAIN-SUFFIX,sfx.ms,Microsoft
+- DOMAIN-SUFFIX,sharepoint.com,Microsoft
+- DOMAIN-SUFFIX,sharepointonline.com,Microsoft
+- DOMAIN-SUFFIX,skype.com,Microsoft
+- DOMAIN-SUFFIX,skypeassets.com,Microsoft
+- DOMAIN-SUFFIX,skypeforbusiness.com,Microsoft
+- DOMAIN-SUFFIX,spoprod-a.akamaihd.net,Microsoft
+- DOMAIN-SUFFIX,staffhub.ms,Microsoft
+- DOMAIN-SUFFIX,svc.ms,Microsoft
+- DOMAIN-SUFFIX,sway-cdn.com,Microsoft
+- DOMAIN-SUFFIX,sway-extensions.com,Microsoft
+- DOMAIN-SUFFIX,sway.com,Microsoft
+- DOMAIN-SUFFIX,trafficmanager.net,Microsoft
+- DOMAIN-SUFFIX,uservoice.com,Microsoft
+- DOMAIN-SUFFIX,virtualearth.net,Microsoft
+- DOMAIN-SUFFIX,visualstudio.com,Microsoft
+- DOMAIN-SUFFIX,windows-ppe.net,Microsoft
+- DOMAIN-SUFFIX,windows.com,Microsoft
+- DOMAIN-SUFFIX,windows.net,Microsoft
+- DOMAIN-SUFFIX,windowsazure.com,Microsoft
+- DOMAIN-SUFFIX,windowsupdate.com,Microsoft
+- DOMAIN-SUFFIX,wunderlist.com,Microsoft
+- DOMAIN-SUFFIX,xbox.cn,Microsoft
+- DOMAIN-SUFFIX,xbox.com,Microsoft
+- DOMAIN-SUFFIX,xboxlive.cn,Microsoft
+- DOMAIN-SUFFIX,xboxlive.com,Microsoft
+- DOMAIN-SUFFIX,yammer.com,Microsoft
+- DOMAIN-SUFFIX,yammerusercontent.com,Microsoft
+- DOMAIN-KEYWORD,1drv,Microsoft
+- DOMAIN-KEYWORD,microsoft,Microsoft
+- DOMAIN-KEYWORD,onedrive,Microsoft
+- DOMAIN-KEYWORD,skydrive,Microsoft
+
+# > LinkedIn
+- DOMAIN-SUFFIX,linkedin.com,LinkedIn
+- DOMAIN-SUFFIX,licdn.com,LinkedIn
+- DOMAIN,lnkd.demdex.net,LinkedIn
+- DOMAIN,dpm.demdex.net,LinkedIn
+- DOMAIN-SUFFIX,rocketreach.co,LinkedIn
+- DOMAIN-SUFFIX,adapt.io,LinkedIn
+- DOMAIN-SUFFIX,rpt.cedexis.com,LinkedIn
+- DOMAIN-SUFFIX,salesnav.in,LinkedIn
+- DOMAIN-KEYWORD,salesforceliveagent.com,LinkedIn
+# > Netflix
+# USER-AGENT,Argo*,Netflix
+- DOMAIN-SUFFIX,fast.com,Netflix
+- DOMAIN-SUFFIX,netflix.com,Netflix
+- DOMAIN-SUFFIX,netflix.net,Netflix
+- DOMAIN-SUFFIX,nflxext.com,Netflix
+- DOMAIN-SUFFIX,nflximg.com,Netflix
+- DOMAIN-SUFFIX,nflximg.net,Netflix
+- DOMAIN-SUFFIX,nflxso.net,Netflix
+- DOMAIN-SUFFIX,nflxvideo.net,Netflix
+- DOMAIN-SUFFIX,netflixdnstest0.com,Netflix
+- DOMAIN-SUFFIX,netflixdnstest1.com,Netflix
+- DOMAIN-SUFFIX,netflixdnstest2.com,Netflix
+- DOMAIN-SUFFIX,netflixdnstest3.com,Netflix
+- DOMAIN-SUFFIX,netflixdnstest4.com,Netflix
+- DOMAIN-SUFFIX,netflixdnstest5.com,Netflix
+- DOMAIN-SUFFIX,netflixdnstest6.com,Netflix
+- DOMAIN-SUFFIX,netflixdnstest7.com,Netflix
+- DOMAIN-SUFFIX,netflixdnstest8.com,Netflix
+- DOMAIN-SUFFIX,netflixdnstest9.com,Netflix
+- DOMAIN-SUFFIX,amazonaws.com,Netflix
+- DOMAIN-SUFFIX,aws.amazon.com,Netflix
+- DOMAIN-SUFFIX,awsstatic.com,Netflix
+- IP-CIDR,23.246.0.0/18,Netflix
+- IP-CIDR,37.77.184.0/21,Netflix
+- IP-CIDR,45.57.0.0/17,Netflix
+- IP-CIDR,64.120.128.0/17,Netflix
+- IP-CIDR,66.197.128.0/17,Netflix
+- IP-CIDR,108.175.32.0/20,Netflix
+- IP-CIDR,192.173.64.0/18,Netflix
+- IP-CIDR,198.38.96.0/19,Netflix
+- IP-CIDR,198.45.48.0/20,Netflix
+
+# > Disney+
+- PROCESS-NAME,com.disney.disneyplus,Disney+
+- DOMAIN-SUFFIX,disney-plus.net,Disney+
+- DOMAIN-SUFFIX,disneyplus.com,Disney+
+- DOMAIN-SUFFIX,dssott.com,Disney+
+- DOMAIN,cdn.registerdisney.go.com,Disney+
+- DOMAIN,global.edge.bamgrid.com,Disney+
+- DOMAIN-SUFFIX,disney.asia,Disney+
+- DOMAIN-SUFFIX,disney.be,Disney+
+- DOMAIN-SUFFIX,disney.bg,Disney+
+- DOMAIN-SUFFIX,disney.ca,Disney+
+- DOMAIN-SUFFIX,disney.ch,Disney+
+- DOMAIN-SUFFIX,disney.co.il,Disney+
+- DOMAIN-SUFFIX,disney.co.jp,Disney+
+- DOMAIN-SUFFIX,disney.co.kr,Disney+
+- DOMAIN-SUFFIX,disney.co.th,Disney+
+- DOMAIN-SUFFIX,disney.co.uk,Disney+
+- DOMAIN-SUFFIX,disney.co.za,Disney+
+- DOMAIN-SUFFIX,disney.com,Disney+
+- DOMAIN-SUFFIX,disney.com.au,Disney+
+- DOMAIN-SUFFIX,disney.com.br,Disney+
+- DOMAIN-SUFFIX,disney.com.hk,Disney+
+- DOMAIN-SUFFIX,disney.com.tw,Disney+
+- DOMAIN-SUFFIX,disney.cz,Disney+
+- DOMAIN-SUFFIX,disney.de,Disney+
+- DOMAIN-SUFFIX,disney.dk,Disney+
+- DOMAIN-SUFFIX,disney.es,Disney+
+- DOMAIN-SUFFIX,disney.fi,Disney+
+- DOMAIN-SUFFIX,disney.fr,Disney+
+- DOMAIN-SUFFIX,disney.gr,Disney+
+- DOMAIN-SUFFIX,disney.hu,Disney+
+- DOMAIN-SUFFIX,disney.id,Disney+
+- DOMAIN-SUFFIX,disney.in,Disney+
+- DOMAIN-SUFFIX,disney.io,Disney+
+- DOMAIN-SUFFIX,disney.it,Disney+
+- DOMAIN-SUFFIX,disney.my,Disney+
+- DOMAIN-SUFFIX,disney.nl,Disney+
+- DOMAIN-SUFFIX,disney.no,Disney+
+- DOMAIN-SUFFIX,disney.ph,Disney+
+- DOMAIN-SUFFIX,disney.pl,Disney+
+- DOMAIN-SUFFIX,disney.pt,Disney+
+- DOMAIN-SUFFIX,disney.ro,Disney+
+- DOMAIN-SUFFIX,disney.ru,Disney+
+- DOMAIN-SUFFIX,disney.se,Disney+
+- DOMAIN-SUFFIX,disney.sg,Disney+
+- DOMAIN-SUFFIX,20thcenturystudios.com.au,Disney+
+- DOMAIN-SUFFIX,20thcenturystudios.com.br,Disney+
+- DOMAIN-SUFFIX,20thcenturystudios.jp,Disney+
+- DOMAIN-SUFFIX,adventuresbydisney.com,Disney+
+- DOMAIN-SUFFIX,babble.com,Disney+
+- DOMAIN-SUFFIX,babyzone.com,Disney+
+- DOMAIN-SUFFIX,bamgrid.com,Disney+
+- DOMAIN-SUFFIX,beautyandthebeastmusical.co.uk,Disney+
+- DOMAIN-SUFFIX,dilcdn.com,Disney+
+- DOMAIN-SUFFIX,disney-asia.com,Disney+
+- DOMAIN-SUFFIX,disney-discount.com,Disney+
+- DOMAIN-SUFFIX,disney-plus.net,Disney+
+- DOMAIN-SUFFIX,disney-portal.my.onetrust.com,Disney+
+- DOMAIN-SUFFIX,disney-studio.com,Disney+
+- DOMAIN-SUFFIX,disney-studio.net,Disney+
+- DOMAIN-SUFFIX,disney.my.sentry.io,Disney+
+- DOMAIN-SUFFIX,disneyadsales.com,Disney+
+- DOMAIN-SUFFIX,disneyarena.com,Disney+
+- DOMAIN-SUFFIX,disneyaulani.com,Disney+
+- DOMAIN-SUFFIX,disneybaby.com,Disney+
+- DOMAIN-SUFFIX,disneycareers.com,Disney+
+- DOMAIN-SUFFIX,disneychannelonstage.com,Disney+
+- DOMAIN-SUFFIX,disneychannelroadtrip.com,Disney+
+- DOMAIN-SUFFIX,disneycruisebrasil.com,Disney+
+- DOMAIN-SUFFIX,disneyenconcert.com,Disney+
+- DOMAIN-SUFFIX,disneyiejobs.com,Disney+
+- DOMAIN-SUFFIX,disneyinflight.com,Disney+
+- DOMAIN-SUFFIX,disneyinternational.com,Disney+
+- DOMAIN-SUFFIX,disneyinternationalhd.com,Disney+
+- DOMAIN-SUFFIX,disneyjunior.com,Disney+
+- DOMAIN-SUFFIX,disneyjuniortreataday.com,Disney+
+- DOMAIN-SUFFIX,disneylatino.com,Disney+
+- DOMAIN-SUFFIX,disneymagicmoments.co.il,Disney+
+- DOMAIN-SUFFIX,disneymagicmoments.co.uk,Disney+
+- DOMAIN-SUFFIX,disneymagicmoments.co.za,Disney+
+- DOMAIN-SUFFIX,disneymagicmoments.de,Disney+
+- DOMAIN-SUFFIX,disneymagicmoments.es,Disney+
+- DOMAIN-SUFFIX,disneymagicmoments.fr,Disney+
+- DOMAIN-SUFFIX,disneymagicmoments.gen.tr,Disney+
+- DOMAIN-SUFFIX,disneymagicmoments.gr,Disney+
+- DOMAIN-SUFFIX,disneymagicmoments.it,Disney+
+- DOMAIN-SUFFIX,disneymagicmoments.pl,Disney+
+- DOMAIN-SUFFIX,disneymagicmomentsme.com,Disney+
+- DOMAIN-SUFFIX,disneyme.com,Disney+
+- DOMAIN-SUFFIX,disneymeetingsandevents.com,Disney+
+- DOMAIN-SUFFIX,disneymovieinsiders.com,Disney+
+- DOMAIN-SUFFIX,disneymusicpromotion.com,Disney+
+- DOMAIN-SUFFIX,disneynewseries.com,Disney+
+- DOMAIN-SUFFIX,disneynow.com,Disney+
+- DOMAIN-SUFFIX,disneypeoplesurveys.com,Disney+
+- DOMAIN-SUFFIX,disneyplus.bn5x.net,Disney+
+- DOMAIN-SUFFIX,disneyplus.com,Disney+
+- DOMAIN-SUFFIX,disneyplus.com.ssl.sc.omtrdc.net,Disney+
+- DOMAIN-SUFFIX,disneyredirects.com,Disney+
+- DOMAIN-SUFFIX,disneysrivieraresort.com,Disney+
+- DOMAIN-SUFFIX,disneystore.com,Disney+
+- DOMAIN-SUFFIX,disneystreaming.com,Disney+
+- DOMAIN-SUFFIX,disneysubscription.com,Disney+
+- DOMAIN-SUFFIX,disneytickets.co.uk,Disney+
+- DOMAIN-SUFFIX,disneyturkiye.com.tr,Disney+
+- DOMAIN-SUFFIX,disneytvajobs.com,Disney+
+- DOMAIN-SUFFIX,disneyworld-go.com,Disney+
+- DOMAIN-SUFFIX,dssott.com,Disney+
+- DOMAIN-SUFFIX,go-disneyworldgo.com,Disney+
+- DOMAIN-SUFFIX,go.com,Disney+
+- DOMAIN-SUFFIX,mickey.tv,Disney+
+- DOMAIN-SUFFIX,moviesanywhere.com,Disney+
+- DOMAIN-SUFFIX,nomadlandmovie.ch,Disney+
+- DOMAIN-SUFFIX,playmation.com,Disney+
+- DOMAIN-SUFFIX,shopdisney.com,Disney+
+- DOMAIN-SUFFIX,shops-disney.com,Disney+
+- DOMAIN-SUFFIX,sorcerersarena.com,Disney+
+- DOMAIN-SUFFIX,spaindisney.com,Disney+
+- DOMAIN-SUFFIX,star-brasil.com,Disney+
+- DOMAIN-SUFFIX,star-latam.com,Disney+
+- DOMAIN-SUFFIX,starwars.com,Disney+
+- DOMAIN-SUFFIX,starwarsgalacticstarcruiser.com,Disney+
+- DOMAIN-SUFFIX,starwarskids.com,Disney+
+- DOMAIN-SUFFIX,streamingdisney.net,Disney+
+- DOMAIN-SUFFIX,thestationbymaker.com,Disney+
+- DOMAIN-SUFFIX,thisispolaris.com,Disney+
+- DOMAIN-SUFFIX,watchdisneyfe.com,Disney+
+
+
+# USER-AGENT,Deezer*,其他国外流媒体
+- DOMAIN-SUFFIX,deezer.com,其他国外流媒体
+- DOMAIN-SUFFIX,dzcdn.net,其他国外流媒体
+# > KKBOX
+- DOMAIN-SUFFIX,kkbox.com,其他国外流媒体
+- DOMAIN-SUFFIX,kkbox.com.tw,其他国外流媒体
+- DOMAIN-SUFFIX,kfs.io,其他国外流媒体
+# > JOOX
+# USER-AGENT,WeMusic*,其他国外流媒体
+# USER-AGENT,JOOX*,其他国外流媒体
+- DOMAIN-SUFFIX,joox.com,其他国外流媒体
+# > Pandora
+# USER-AGENT,Pandora*,其他国外流媒体
+- DOMAIN-SUFFIX,pandora.com,其他国外流媒体
+# > SoundCloud
+# USER-AGENT,SoundCloud*,其他国外流媒体
+- DOMAIN-SUFFIX,p-cdn.us,其他国外流媒体
+- DOMAIN-SUFFIX,sndcdn.com,其他国外流媒体
+- DOMAIN-SUFFIX,soundcloud.com,其他国外流媒体
+# > Spotify
+# USER-AGENT,Spotify*,其他国外流媒体
+- DOMAIN-SUFFIX,pscdn.co,其他国外流媒体
+- DOMAIN-SUFFIX,scdn.co,其他国外流媒体
+- DOMAIN-SUFFIX,spotify.com,其他国外流媒体
+- DOMAIN-SUFFIX,spoti.fi,其他国外流媒体
+- DOMAIN-KEYWORD,spotify.com,其他国外流媒体
+- DOMAIN-KEYWORD,-spotify-com,其他国外流媒体
+# > TIDAL
+# USER-AGENT,TIDAL*,其他国外流媒体
+- DOMAIN-SUFFIX,tidal.com,其他国外流媒体
+# > YouTubeMusic
+# USER-AGENT,com.google.ios.youtubemusic*,其他国外流媒体
+# USER-AGENT,YouTubeMusic*,其他国外流媒体
+# (Video)
+# > All4
+# USER-AGENT,All4*,其他国外流媒体
+- DOMAIN-SUFFIX,c4assets.com,其他国外流媒体
+- DOMAIN-SUFFIX,channel4.com,其他国外流媒体
+# > AbemaTV
+# USER-AGENT,AbemaTV*,其他国外流媒体
+- DOMAIN-SUFFIX,abema.io,其他国外流媒体
+- DOMAIN-SUFFIX,ameba.jp,其他国外流媒体
+- DOMAIN-SUFFIX,abema.tv,其他国外流媒体
+- DOMAIN-SUFFIX,hayabusa.io,其他国外流媒体
+- DOMAIN,abematv.akamaized.net,其他国外流媒体
+- DOMAIN,ds-linear-abematv.akamaized.net,其他国外流媒体
+- DOMAIN,ds-vod-abematv.akamaized.net,其他国外流媒体
+- DOMAIN,linear-abematv.akamaized.net,其他国外流媒体
+# > Amazon Prime Video
+# USER-AGENT,InstantVideo.US*,其他国外流媒体
+# USER-AGENT,Prime%20Video*,其他国外流媒体
+- DOMAIN-SUFFIX,aiv-cdn.net,其他国外流媒体
+- DOMAIN-SUFFIX,aiv-delivery.net,其他国外流媒体
+- DOMAIN-SUFFIX,amazonvideo.com,其他国外流媒体
+- DOMAIN-SUFFIX,primevideo.com,其他国外流媒体
+- DOMAIN,avodmp4s3ww-a.akamaihd.net,其他国外流媒体
+- DOMAIN,d25xi40x97liuc.cloudfront.net,其他国外流媒体
+- DOMAIN,dmqdd6hw24ucf.cloudfront.net,其他国外流媒体
+- DOMAIN,d22qjgkvxw22r6.cloudfront.net,其他国外流媒体
+- DOMAIN,d1v5ir2lpwr8os.cloudfront.net,其他国外流媒体
+- DOMAIN-KEYWORD,avoddashs,其他国外流媒体
+# > Bahamut
+# USER-AGENT,Anime*,其他国外流媒体
+- DOMAIN-SUFFIX,bahamut.com.tw,其他国外流媒体
+- DOMAIN-SUFFIX,gamer.com.tw,其他国外流媒体
+- DOMAIN,gamer-cds.cdn.hinet.net,其他国外流媒体
+- DOMAIN,gamer2-cds.cdn.hinet.net,其他国外流媒体
+# > BBC iPlayer
+# USER-AGENT,BBCiPlayer*,其他国外流媒体
+- DOMAIN-SUFFIX,bbc.co.uk,其他国外流媒体
+- DOMAIN-SUFFIX,bbci.co.uk,其他国外流媒体
+- DOMAIN-KEYWORD,bbcfmt,其他国外流媒体
+- DOMAIN-KEYWORD,uk-live,其他国外流媒体
+# > DAZN
+# USER-AGENT,DAZN*,其他国外流媒体
+- DOMAIN-SUFFIX,dazn.com,其他国外流媒体
+- DOMAIN-SUFFIX,dazn-api.com,其他国外流媒体
+- DOMAIN,d151l6v8er5bdm.cloudfront.net,其他国外流媒体
+- DOMAIN-KEYWORD,voddazn,其他国外流媒体
+# > encoreTVB
+# USER-AGENT,encoreTVB*,其他国外流媒体
+- DOMAIN-SUFFIX,encoretvb.com,其他国外流媒体
+- DOMAIN,edge.api.brightcove.com,其他国外流媒体
+- DOMAIN,bcbolt446c5271-a.akamaihd.net,其他国外流媒体
+# > FOX NOW
+# USER-AGENT,FOX%20NOW*,其他国外流媒体
+- DOMAIN-SUFFIX,fox.com,其他国外流媒体
+- DOMAIN-SUFFIX,foxdcg.com,其他国外流媒体
+- DOMAIN-SUFFIX,theplatform.com,其他国外流媒体
+- DOMAIN-SUFFIX,uplynk.com,其他国外流媒体
+# > HBO NOW
+# USER-AGENT,HBO%20NOW*,其他国外流媒体
+- DOMAIN-SUFFIX,hbo.com,其他国外流媒体
+- DOMAIN-SUFFIX,hbogo.com,其他国外流媒体
+- DOMAIN-SUFFIX,hbonow.com,其他国外流媒体
+# > HBO GO HKG
+# USER-AGENT,HBO%20GO%20PROD%20HKG*,其他国外流媒体
+- DOMAIN-SUFFIX,hbogoasia.com,其他国外流媒体
+- DOMAIN-SUFFIX,hbogoasia.hk,其他国外流媒体
+- DOMAIN,bcbolthboa-a.akamaihd.net,其他国外流媒体
+- DOMAIN,players.brightcove.net,其他国外流媒体
+- DOMAIN,s3-ap-southeast-1.amazonaws.com,其他国外流媒体
+- DOMAIN,dai3fd1oh325y.cloudfront.net,其他国外流媒体
+- DOMAIN,44wilhpljf.execute-api.ap-southeast-1.amazonaws.com,其他国外流媒体
+- DOMAIN,hboasia1-i.akamaihd.net,其他国外流媒体
+- DOMAIN,hboasia2-i.akamaihd.net,其他国外流媒体
+- DOMAIN,hboasia3-i.akamaihd.net,其他国外流媒体
+- DOMAIN,hboasia4-i.akamaihd.net,其他国外流媒体
+- DOMAIN,hboasia5-i.akamaihd.net,其他国外流媒体
+- DOMAIN,cf-images.ap-southeast-1.prod.boltdns.net,其他国外流媒体
+# > 华文电视
+# USER-AGENT,HWTVMobile*,其他国外流媒体
+- DOMAIN-SUFFIX,5itv.tv,其他国外流媒体
+- DOMAIN-SUFFIX,ocnttv.com,其他国外流媒体
+# > Hulu
+- DOMAIN-SUFFIX,hulu.com,其他国外流媒体
+- DOMAIN-SUFFIX,huluim.com,其他国外流媒体
+- DOMAIN-SUFFIX,hulustream.com,其他国外流媒体
+# > Hulu(フールー)
+- DOMAIN-SUFFIX,happyon.jp,其他国外流媒体
+- DOMAIN-SUFFIX,hulu.jp,其他国外流媒体
+# > ITV
+# USER-AGENT,ITV_Player*,其他国外流媒体
+- DOMAIN-SUFFIX,itv.com,其他国外流媒体
+- DOMAIN-SUFFIX,itvstatic.com,其他国外流媒体
+- DOMAIN,itvpnpmobile-a.akamaihd.net,其他国外流媒体
+# > KKTV
+# USER-AGENT,KKTV*,其他国外流媒体
+# USER-AGENT,com.kktv.ios.kktv*,其他国外流媒体
+- DOMAIN-SUFFIX,kktv.com.tw,其他国外流媒体
+- DOMAIN-SUFFIX,kktv.me,其他国外流媒体
+- DOMAIN,kktv-theater.kk.stream,其他国外流媒体
+# > Line TV
+# USER-AGENT,LINE%20TV*,其他国外流媒体
+- DOMAIN-SUFFIX,linetv.tw,其他国外流媒体
+- DOMAIN,d3c7rimkq79yfu.cloudfront.net,其他国外流媒体
+# > LiTV
+- DOMAIN-SUFFIX,litv.tv,其他国外流媒体
+- DOMAIN,litvfreemobile-hichannel.cdn.hinet.net,其他国外流媒体
+# > My5
+# USER-AGENT,My5*,其他国外流媒体
+- DOMAIN-SUFFIX,channel5.com,其他国外流媒体
+- DOMAIN-SUFFIX,my5.tv,其他国外流媒体
+- DOMAIN,d349g9zuie06uo.cloudfront.net,其他国外流媒体
+# > myTV SUPER
+# USER-AGENT,mytv*,其他国外流媒体
+- DOMAIN-SUFFIX,mytvsuper.com,其他国外流媒体
+- DOMAIN-SUFFIX,tvb.com,其他国外流媒体
+# > niconico
+# USER-AGENT,Niconico*,其他国外流媒体
+- DOMAIN-SUFFIX,dmc.nico,其他国外流媒体
+- DOMAIN-SUFFIX,nicovideo.jp,其他国外流媒体
+- DOMAIN-SUFFIX,nimg.jp,其他国外流媒体
+- DOMAIN-SUFFIX,socdm.com,其他国外流媒体
+# > PBS
+# USER-AGENT,PBS*,其他国外流媒体
+- DOMAIN-SUFFIX,pbs.org,其他国外流媒体
+# > Pornhub
+- DOMAIN-SUFFIX,phncdn.com,其他国外流媒体
+- DOMAIN-SUFFIX,phprcdn.com,其他国外流媒体
+- DOMAIN-SUFFIX,pornhub.com,其他国外流媒体
+- DOMAIN-SUFFIX,pornhubpremium.com,其他国外流媒体
+# > 台湾好
+# USER-AGENT,TaiwanGood*,其他国外流媒体
+- DOMAIN-SUFFIX,skyking.com.tw,其他国外流媒体
+- DOMAIN,hamifans.emome.net,其他国外流媒体
+# > Twitch
+- DOMAIN-SUFFIX,twitch.tv,其他国外流媒体
+- DOMAIN-SUFFIX,twitchcdn.net,其他国外流媒体
+- DOMAIN-SUFFIX,ttvnw.net,其他国外流媒体
+- DOMAIN-SUFFIX,jtvnw.net,其他国外流媒体
+# > ViuTV
+# USER-AGENT,Viu*,其他国外流媒体
+# USER-AGENT,ViuTV*,其他国外流媒体
+- DOMAIN-SUFFIX,viu.com,其他国外流媒体
+- DOMAIN-SUFFIX,viu.tv,其他国外流媒体
+- DOMAIN,api.viu.now.com,其他国外流媒体
+- DOMAIN,d1k2us671qcoau.cloudfront.net,其他国外流媒体
+- DOMAIN,d2anahhhmp1ffz.cloudfront.net,其他国外流媒体
+- DOMAIN,dfp6rglgjqszk.cloudfront.net,其他国外流媒体
+# > YouTube
+# USER-AGENT,com.google.ios.youtube*,其他国外流媒体
+# USER-AGENT,YouTube*,其他国外流媒体
+- DOMAIN-SUFFIX,googlevideo.com,其他国外流媒体
+- DOMAIN-SUFFIX,youtube.com,其他国外流媒体
+- DOMAIN,youtubei.googleapis.com,其他国外流媒体
+
+# > Bilibili
+# - USER-AGENT,bili*,爱奇艺等国内流媒体
+# - USER-AGENT,Bilibili*,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,acg.tv,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,acgvideo.com,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,b23.tv,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,biliapi.com,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,biliapi.net,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,bilibili.com,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,biligame.com,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,biligame.net,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,bilivideo.com,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,hdslb.com,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,im9.com,爱奇艺等国内流媒体
+
+# > IQIYI
+- DOMAIN-KEYWORD,qiyi,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,qy.net,爱奇艺等国内流媒体
+- IP-CIDR,101.227.0.0/16,爱奇艺等国内流媒体
+- IP-CIDR,101.224.0.0/13,爱奇艺等国内流媒体
+- IP-CIDR,119.176.0.0/12,爱奇艺等国内流媒体
+
+# > letv
+- DOMAIN-SUFFIX,api.mob.app.letv.com,爱奇艺等国内流媒体
+
+# > MOO
+# - USER-AGENT,MOO*,爱奇艺等国内流媒体
+# - USER-AGENT,TencentMidasConnect*,爱奇艺等国内流媒体
+
+# > Tencent Video
+- DOMAIN-SUFFIX,vv.video.qq.com,爱奇艺等国内流媒体
+
+# > Youku
+- IP-CIDR,106.11.0.0/16,爱奇艺等国内流媒体
+
+# > Netease Music
+- DOMAIN,apm.music.163.com,爱奇艺等国内流媒体
+- DOMAIN,apm3.music.163.com,爱奇艺等国内流媒体
+- DOMAIN,interface.music.163.com,爱奇艺等国内流媒体
+- DOMAIN,interface3.music.163.com,爱奇艺等国内流媒体
+- DOMAIN,music.163.com,爱奇艺等国内流媒体
+- IP-CIDR,101.71.154.241/32,爱奇艺等国内流媒体
+- IP-CIDR,103.126.92.132/32,爱奇艺等国内流媒体
+- IP-CIDR,103.126.92.133/32,爱奇艺等国内流媒体
+- IP-CIDR,112.13.119.17/32,爱奇艺等国内流媒体
+- IP-CIDR,112.13.122.1/32,爱奇艺等国内流媒体
+- IP-CIDR,115.236.118.33/32,爱奇艺等国内流媒体
+- IP-CIDR,115.236.121.1/32,爱奇艺等国内流媒体
+- IP-CIDR,118.24.63.156/32,爱奇艺等国内流媒体
+- IP-CIDR,193.112.159.225/32,爱奇艺等国内流媒体
+- IP-CIDR,223.252.199.66/32,爱奇艺等国内流媒体
+- IP-CIDR,223.252.199.67/32,爱奇艺等国内流媒体
+- IP-CIDR,39.105.63.80/32,爱奇艺等国内流媒体
+- IP-CIDR,45.254.48.1/32,爱奇艺等国内流媒体
+- IP-CIDR,47.100.127.239/32,爱奇艺等国内流媒体
+- IP-CIDR,59.111.160.195/32,爱奇艺等国内流媒体
+- IP-CIDR,59.111.160.197/32,爱奇艺等国内流媒体
+- IP-CIDR,59.111.181.35/32,爱奇艺等国内流媒体
+- IP-CIDR,59.111.181.38/32,爱奇艺等国内流媒体
+- IP-CIDR,59.111.181.60/32,爱奇艺等国内流媒体
+
+# > HunanTV
+- DOMAIN-SUFFIX,hitv.com,爱奇艺等国内流媒体
+- DOMAIN-SUFFIX,mgtv.com,爱奇艺等国内流媒体
+
+# > Line
+- DOMAIN-SUFFIX,lin.ee,Proxy
+- DOMAIN-SUFFIX,line.me,Proxy
+- DOMAIN-SUFFIX,line.naver.jp,Proxy
+- DOMAIN-SUFFIX,line-apps.com,Proxy
+- DOMAIN-SUFFIX,line-cdn.net,Proxy
+- DOMAIN-SUFFIX,line-scdn.net,Proxy
+- DOMAIN-SUFFIX,nhncorp.jp,Proxy
+
+# > Sony
+- DOMAIN-SUFFIX,playstation.com,Proxy
+- DOMAIN-SUFFIX,playstation.net,Proxy
+- DOMAIN-SUFFIX,playstationnetwork.com,Proxy
+- DOMAIN-SUFFIX,sony.com,Proxy
+- DOMAIN-SUFFIX,sonyentertainmentnetwork.com,Proxy
+
+# > Spark
+- DOMAIN-SUFFIX,api.amplitude.com,Proxy
+- DOMAIN-SUFFIX,app.smartmailcloud.com,Proxy
+- DOMAIN-SUFFIX,gate.hockeyapp.net,Proxy
+- DOMAIN-SUFFIX,smartmailcloud.com,Proxy
+
+# > Top blocked sites
+- DOMAIN-SUFFIX,2o7.net,Proxy
+- DOMAIN-SUFFIX,4everProxy.com,Proxy
+- DOMAIN-SUFFIX,4shared.com,Proxy
+- DOMAIN-SUFFIX,4sqi.net,Proxy
+- DOMAIN-SUFFIX,9to5mac.com,Proxy
+- DOMAIN-SUFFIX,abpchina.org,Proxy
+- DOMAIN-SUFFIX,accountkit.com,Proxy
+- DOMAIN-SUFFIX,adblockplus.org,Proxy
+- DOMAIN-SUFFIX,adobe.com,Proxy
+- DOMAIN-SUFFIX,adobedtm.com,Proxy
+- DOMAIN-SUFFIX,aerisapi.com,Proxy
+- DOMAIN-SUFFIX,akamaihd.net,Proxy
+- DOMAIN-SUFFIX,airtable.com,Proxy
+- DOMAIN-SUFFIX,alfredapp.com,Proxy
+- DOMAIN-SUFFIX,allconnected.co,Proxy
+- DOMAIN-SUFFIX,amazon.co,Proxy
+- DOMAIN-SUFFIX,amazon.co.jp,Proxy
+- DOMAIN-SUFFIX,amazon.com,Proxy
+- DOMAIN-SUFFIX,amazonaws.com,Proxy
+- DOMAIN-SUFFIX,ampproject.com,Proxy
+- DOMAIN-SUFFIX,ampproject.net,Proxy
+- DOMAIN-SUFFIX,ampproject.org,Proxy
+- DOMAIN-SUFFIX,anaconda.com,Proxy
+- DOMAIN-SUFFIX,ancsconf.org,Proxy
+- DOMAIN-SUFFIX,android.com,Proxy
+- DOMAIN-SUFFIX,androidify.com,Proxy
+- DOMAIN-SUFFIX,android-x86.org,Proxy
+- DOMAIN-SUFFIX,angularjs.org,Proxy
+- DOMAIN-SUFFIX,anthonycalzadilla.com,Proxy
+- DOMAIN-SUFFIX,aol.com,Proxy
+- DOMAIN-SUFFIX,aolcdn.com,Proxy
+- DOMAIN-SUFFIX,api.mixpanel.com,Proxy
+- DOMAIN-SUFFIX,api.termius.com,Proxy
+- DOMAIN-SUFFIX,api.tiktokv.com,Proxy
+- DOMAIN-SUFFIX,api.urbandictionary.com,Proxy
+- DOMAIN-SUFFIX,apigee.com,Proxy
+- DOMAIN-SUFFIX,apk-dl.com,Proxy
+- DOMAIN-SUFFIX,apkpure.com,Proxy
+- DOMAIN-SUFFIX,appdownloader.net,Proxy
+- DOMAIN-SUFFIX,Apple-dns.net,Proxy
+- DOMAIN-SUFFIX,app-measurement.com,Proxy
+- DOMAIN-SUFFIX,appshopper.com,Proxy
+- DOMAIN-SUFFIX,arcgis.com,Proxy
+- DOMAIN-SUFFIX,archive.is,Proxy
+- DOMAIN-SUFFIX,archive.org,Proxy
+- DOMAIN-SUFFIX,archives.gov,Proxy
+- DOMAIN-SUFFIX,armorgames.com,Proxy
+- DOMAIN-SUFFIX,aspnetcdn.com,Proxy
+- DOMAIN-SUFFIX,async.be,Proxy
+- DOMAIN-SUFFIX,att.com,Proxy
+- DOMAIN-SUFFIX,avgle.com,Proxy
+- DOMAIN-SUFFIX,awsstatic.com,Proxy
+- DOMAIN-SUFFIX,azure.com,Proxy
+- DOMAIN-SUFFIX,azureedge.net,Proxy
+- DOMAIN-SUFFIX,azurewebsites.net,Proxy
+- DOMAIN-SUFFIX,badoo.com,Proxy
+- DOMAIN-SUFFIX,bandisoft.com,Proxy
+- DOMAIN-SUFFIX,bbtoystore.com,Proxy
+- DOMAIN-SUFFIX,betvictor.com,Proxy
+- DOMAIN-SUFFIX,bigsound.org,Proxy
+- DOMAIN-SUFFIX,bing.com,Proxy
+- DOMAIN-SUFFIX,bing.net,Proxy
+- DOMAIN-SUFFIX,bintray.com,Proxy
+- DOMAIN-SUFFIX,bit.com,Proxy
+- DOMAIN-SUFFIX,bit.do,Proxy
+- DOMAIN-SUFFIX,bit.ly,Proxy
+- DOMAIN-SUFFIX,bitbucket.org,Proxy
+- DOMAIN-SUFFIX,bitcointalk.org,Proxy
+- DOMAIN-SUFFIX,bitshare.com,Proxy
+- DOMAIN-SUFFIX,bkrtx.com,Proxy
+- DOMAIN-SUFFIX,blog.com,Proxy
+- DOMAIN-SUFFIX,blogcdn.com,Proxy
+- DOMAIN-SUFFIX,blogger.com,Proxy
+- DOMAIN-SUFFIX,bloglovin.com,Proxy
+- DOMAIN-SUFFIX,blogsmithmedia.com,Proxy
+- DOMAIN-SUFFIX,blogspot.hk,Proxy
+- DOMAIN-SUFFIX,bloomberg.cn,Proxy
+- DOMAIN-SUFFIX,bloomberg.com,Proxy
+- DOMAIN-SUFFIX,books.com.tw,Proxy
+- DOMAIN-SUFFIX,boomtrain.com,Proxy
+- DOMAIN-SUFFIX,botanwang.com,Proxy
+- DOMAIN-SUFFIX,box.com,Proxy
+- DOMAIN-SUFFIX,box.net,Proxy
+- DOMAIN-SUFFIX,boxun.com,Proxy
+- DOMAIN-SUFFIX,cachefly.net,Proxy
+- DOMAIN-SUFFIX,cbc.ca,Proxy
+- DOMAIN-SUFFIX,cdn.angruo.com,Proxy
+- DOMAIN-SUFFIX,cdn.segment.com,Proxy
+- DOMAIN-SUFFIX,cdnst.net,Proxy
+- DOMAIN-SUFFIX,celestrak.com,Proxy
+- DOMAIN-SUFFIX,census.gov,Proxy
+- DOMAIN-SUFFIX,certificate-transparency.org,Proxy
+- DOMAIN-SUFFIX,chinadigitaltimes.net,Proxy
+- DOMAIN-SUFFIX,chinatimes.com,Proxy
+- DOMAIN-SUFFIX,chrome.com,Proxy
+- DOMAIN-SUFFIX,chromecast.com,Proxy
+- DOMAIN-SUFFIX,chromercise.com,Proxy
+- DOMAIN-SUFFIX,chromestatus.com,Proxy
+- DOMAIN-SUFFIX,chromium.org,Proxy
+- DOMAIN-SUFFIX,cl.ly,Proxy
+- DOMAIN-SUFFIX,cloudflare.com,Proxy
+- DOMAIN-SUFFIX,cloudfront.net,Proxy
+- DOMAIN-SUFFIX,cloudgarage.jp,Proxy
+- DOMAIN-SUFFIX,cloudmagic.com,Proxy
+- DOMAIN-SUFFIX,cmail19.com,Proxy
+- DOMAIN-SUFFIX,cnet.com,Proxy
+- DOMAIN-SUFFIX,cnn.com,Proxy
+- DOMAIN-SUFFIX,cocoapods.org,Proxy
+- DOMAIN-SUFFIX,comodoca.com,Proxy
+- DOMAIN-SUFFIX,content.office.net,DIRECT
+- DOMAIN-SUFFIX,culturedcode.com,Proxy
+- DOMAIN-SUFFIX,cygames.jp,Proxy
+- DOMAIN-SUFFIX,d.pr,Proxy
+- DOMAIN-SUFFIX,danilo.to,Proxy
+- DOMAIN-SUFFIX,daolan.net,Proxy
+- DOMAIN-SUFFIX,data-vocabulary.org,Proxy
+- DOMAIN-SUFFIX,dayone.me,Proxy
+- DOMAIN-SUFFIX,db.tt,Proxy
+- DOMAIN-SUFFIX,dcmilitary.com,Proxy
+- DOMAIN-SUFFIX,deja.com,Proxy
+- DOMAIN-SUFFIX,demdex.net,Proxy
+- DOMAIN-SUFFIX,deskconnect.com,Proxy
+- DOMAIN-SUFFIX,digisfera.com,Proxy
+- DOMAIN-SUFFIX,digitaltrends.com,Proxy
+- DOMAIN-SUFFIX,disconnect.me,Proxy
+- DOMAIN-SUFFIX,disq.us,Proxy
+- DOMAIN-SUFFIX,disqus.com,Proxy
+- DOMAIN-SUFFIX,disquscdn.com,Proxy
+- DOMAIN-SUFFIX,dmm.co.jp,Proxy
+- DOMAIN-SUFFIX,dnsimple.com,Proxy
+- DOMAIN-SUFFIX,docker.com,Proxy
+- DOMAIN-SUFFIX,doub.io,Proxy
+- DOMAIN-SUFFIX,dowjones.com,Proxy
+- DOMAIN-SUFFIX,dribbble.com,Proxy
+- DOMAIN-SUFFIX,droplr.com,Proxy
+- DOMAIN-SUFFIX,duckduckgo.com,Proxy
+- DOMAIN-SUFFIX,dueapp.com,Proxy
+- DOMAIN-SUFFIX,dw.com,Proxy
+- DOMAIN-SUFFIX,easybib.com,Proxy
+- DOMAIN-SUFFIX,economist.com,Proxy
+- DOMAIN-SUFFIX,edgecastcdn.net,Proxy
+- DOMAIN-SUFFIX,edgekey.net,Proxy
+- DOMAIN-SUFFIX,edgesuite.net,Proxy
+- DOMAIN-SUFFIX,engadget.com,Proxy
+- DOMAIN-SUFFIX,entrust.net,Proxy
+- DOMAIN-SUFFIX,eurekavpt.com,Proxy
+- DOMAIN-SUFFIX,evernote.com,Proxy
+- DOMAIN-SUFFIX,extmatrix.com,Proxy
+- DOMAIN-SUFFIX,eyny.com,Proxy
+- DOMAIN-SUFFIX,fabric.io,Proxy
+- DOMAIN-SUFFIX,fastly.net,Proxy
+- DOMAIN-SUFFIX,fastmail.com,Proxy
+- DOMAIN-SUFFIX,fc2.com,Proxy
+- DOMAIN-SUFFIX,feedburner.com,Proxy
+- DOMAIN-SUFFIX,feedly.com,Proxy
+- DOMAIN-SUFFIX,feedsportal.com,Proxy
+- DOMAIN-SUFFIX,fiftythree.com,Proxy
+- DOMAIN-SUFFIX,firebaseio.com,Proxy
+- DOMAIN-SUFFIX,flexibits.com,Proxy
+- DOMAIN-SUFFIX,flickr.com,Proxy
+- DOMAIN-SUFFIX,flipboard.com,Proxy
+- DOMAIN-SUFFIX,flipkart.com,Proxy
+- DOMAIN-SUFFIX,flitto.com,Proxy
+- DOMAIN-SUFFIX,flurry.com,Proxy
+- DOMAIN-SUFFIX,freeopenProxy.com,Proxy
+- DOMAIN-SUFFIX,fubo.tv,Proxy
+- DOMAIN-SUFFIX,fullstory.com,Proxy
+- DOMAIN-SUFFIX,fzlm.net,Proxy
+- DOMAIN-SUFFIX,g.co,Proxy
+- DOMAIN-SUFFIX,gabia.net,Proxy
+- DOMAIN-SUFFIX,garena.com,Proxy
+- DOMAIN-SUFFIX,geni.us,Proxy
+- DOMAIN-SUFFIX,get.how,Proxy
+- DOMAIN-SUFFIX,getcloudapp.com,Proxy
+- DOMAIN-SUFFIX,getfoxyProxy.org,Proxy
+- DOMAIN-SUFFIX,getlantern.org,Proxy
+- DOMAIN-SUFFIX,getmdl.io,Proxy
+- DOMAIN-SUFFIX,getpricetag.com,Proxy
+- DOMAIN-SUFFIX,gfw.press,Proxy
+- DOMAIN-SUFFIX,gfx.ms,Proxy
+- DOMAIN-SUFFIX,ggpht.com,Proxy
+- DOMAIN-SUFFIX,ghostnoteapp.com,Proxy
+- DOMAIN-SUFFIX,git.io,Proxy
+- DOMAIN-SUFFIX,gitbook.com,Proxy
+- DOMAIN-SUFFIX,globalsign.com,Proxy
+- DOMAIN-SUFFIX,gmocloud.com,Proxy
+- DOMAIN-SUFFIX,gmodules.com,Proxy
+- DOMAIN-SUFFIX,go.com,Proxy
+- DOMAIN-SUFFIX,go.jp,Proxy
+- DOMAIN-SUFFIX,godaddy.com,Proxy
+- DOMAIN-SUFFIX,golang.org,Proxy
+- DOMAIN-SUFFIX,gongm.in,Proxy
+- DOMAIN-SUFFIX,goo.gl,Proxy
+- DOMAIN-SUFFIX,goodreaders.com,Proxy
+- DOMAIN-SUFFIX,goodreads.com,Proxy
+- DOMAIN-SUFFIX,gravatar.com,Proxy
+- DOMAIN-SUFFIX,gstatic.cn,Proxy
+- DOMAIN-SUFFIX,gstatic.com,Proxy
+- DOMAIN-SUFFIX,gunsamerica.com,Proxy
+- DOMAIN-SUFFIX,gvt0.com,Proxy
+- DOMAIN-SUFFIX,gvt1.com,Proxy
+- DOMAIN-SUFFIX,helpshift.com,Proxy
+- DOMAIN-SUFFIX,hinet.net,Proxy
+- DOMAIN-SUFFIX,hockeyapp.net,Proxy
+- DOMAIN-SUFFIX,homedepot.com,Proxy
+- DOMAIN-SUFFIX,hootsuite.com,Proxy
+- DOMAIN-SUFFIX,howtoforge.com,Proxy
+- DOMAIN-SUFFIX,i-cable.com,Proxy
+- DOMAIN-SUFFIX,iam.soy,Proxy
+- DOMAIN-SUFFIX,icoco.com,Proxy
+- DOMAIN-SUFFIX,icons8.com,Proxy
+- DOMAIN-SUFFIX,ift.tt,Proxy
+- DOMAIN-SUFFIX,ifttt.com,Proxy
+- DOMAIN-SUFFIX,imageshack.us,Proxy
+- DOMAIN-SUFFIX,img.ly,Proxy
+- DOMAIN-SUFFIX,imgur.com,Proxy
+- DOMAIN-SUFFIX,imore.com,Proxy
+- DOMAIN-SUFFIX,ingress.com,Proxy
+- DOMAIN-SUFFIX,insder.co,Proxy
+- DOMAIN-SUFFIX,instapaper.com,Proxy
+- DOMAIN-SUFFIX,instructables.com,Proxy
+- DOMAIN-SUFFIX,io.io,Proxy
+- DOMAIN-SUFFIX,ip.sb,Proxy
+- DOMAIN-SUFFIX,ipaddress.com,Proxy
+- DOMAIN-SUFFIX,ipn.li,Proxy
+- DOMAIN-SUFFIX,is.gd,Proxy
+- DOMAIN-SUFFIX,ishowsapp.com,Proxy
+- DOMAIN-SUFFIX,issuu.com,Proxy
+- DOMAIN-SUFFIX,itgonglun.com,Proxy
+- DOMAIN-SUFFIX,itun.es,Proxy
+- DOMAIN-SUFFIX,ixquick.com,Proxy
+- DOMAIN-SUFFIX,j.mp,Proxy
+- DOMAIN-SUFFIX,javbus.com,Proxy
+- DOMAIN-SUFFIX,js.revsci.net,Proxy
+- DOMAIN-SUFFIX,jshint.com,Proxy
+- DOMAIN-SUFFIX,jtvnw.net,Proxy
+- DOMAIN-SUFFIX,justgetflux.com,Proxy
+- DOMAIN-SUFFIX,kakao.co.kr,Proxy
+- DOMAIN-SUFFIX,kakao.com,Proxy
+- DOMAIN-SUFFIX,kakaocdn.net,Proxy
+- DOMAIN-SUFFIX,kat.cr,Proxy
+- DOMAIN-SUFFIX,kenengba.com,Proxy
+- DOMAIN-SUFFIX,kik.com,Proxy
+- DOMAIN-SUFFIX,klip.me,Proxy
+- DOMAIN-SUFFIX,leancloud.com,Proxy
+- DOMAIN-SUFFIX,leetcode.com,Proxy
+- DOMAIN-SUFFIX,lhie1.com,Proxy
+- DOMAIN-SUFFIX,libsyn.com,Proxy
+- DOMAIN-SUFFIX,lightboxcdn.com,Proxy
+- DOMAIN-SUFFIX,like.com,Proxy
+- DOMAIN-SUFFIX,linode.com,Proxy
+- DOMAIN-SUFFIX,lithium.com,Proxy
+- DOMAIN-SUFFIX,littlehj.com,Proxy
+- DOMAIN-SUFFIX,livefilestore.com,Proxy
+- DOMAIN-SUFFIX,llnwd.net,Proxy
+- DOMAIN-SUFFIX,localnetwork.uop,Proxy
+- DOMAIN-SUFFIX,logmein.com,Proxy
+- DOMAIN-SUFFIX,macid.co,Proxy
+- DOMAIN-SUFFIX,macromedia.com,Proxy
+- DOMAIN-SUFFIX,macrumors.com,Proxy
+- DOMAIN-SUFFIX,manhuaren.com,Proxy
+- DOMAIN-SUFFIX,marketwatch.com,Proxy
+- DOMAIN-SUFFIX,mashable.com,Proxy
+- DOMAIN-SUFFIX,mathjax.org,Proxy
+- DOMAIN-SUFFIX,maven.org,Proxy
+- DOMAIN-SUFFIX,medium.com,Proxy
+- DOMAIN-SUFFIX,mega.co.nz,Proxy
+- DOMAIN-SUFFIX,mega.nz,Proxy
+- DOMAIN-SUFFIX,megaupload.com,Proxy
+- DOMAIN-SUFFIX,microsofttranslator.com,DIRECT
+- DOMAIN-SUFFIX,mindnode.com,Proxy
+- DOMAIN-SUFFIX,mlssoccer.com,Proxy
+- DOMAIN-SUFFIX,mobile01.com,Proxy
+- DOMAIN-SUFFIX,modmyi.com,Proxy
+- DOMAIN-SUFFIX,moves-export.com,Proxy
+- DOMAIN-SUFFIX,mp3buscador.com,Proxy
+- DOMAIN-SUFFIX,msedge.net,Proxy
+- DOMAIN-SUFFIX,mycnnews.com,Proxy
+- DOMAIN-SUFFIX,myfontastic.com,Proxy
+- DOMAIN-SUFFIX,name.com,Proxy
+- DOMAIN-SUFFIX,nasa.gov,Proxy
+- DOMAIN-SUFFIX,ndr.de,Proxy
+- DOMAIN-SUFFIX,netdna-cdn.com,Proxy
+- DOMAIN-SUFFIX,newipnow.com,Proxy
+- DOMAIN-SUFFIX,nextmedia.com,Proxy
+- DOMAIN-SUFFIX,nih.gov,Proxy
+- DOMAIN-SUFFIX,nintendo.com,Proxy
+- DOMAIN-SUFFIX,nintendo.net,Proxy
+- DOMAIN-SUFFIX,notion.so,Proxy
+- DOMAIN-SUFFIX,novafile.com,Proxy
+- DOMAIN-SUFFIX,nrk.no,Proxy
+- DOMAIN-SUFFIX,nsstatic.net,Proxy
+- DOMAIN-SUFFIX,nssurge.com,Proxy
+- DOMAIN-SUFFIX,nyt.com,Proxy
+- DOMAIN-SUFFIX,nytimes.com,Proxy
+- DOMAIN-SUFFIX,nytimg.com,Proxy
+- DOMAIN-SUFFIX,nytstyle.com,Proxy
+- DOMAIN-SUFFIX,office365.com,DIRECT
+- DOMAIN-SUFFIX,omnigroup.com,Proxy
+- DOMAIN-SUFFIX,onenote.com,Proxy
+- DOMAIN-SUFFIX,ooyala.com,Proxy
+- DOMAIN-SUFFIX,openvpn.net,Proxy
+- DOMAIN-SUFFIX,openwrt.org,Proxy
+- DOMAIN-SUFFIX,optimizely.com,Proxy
+- DOMAIN-SUFFIX,orkut.com,Proxy
+- DOMAIN-SUFFIX,osha.gov,Proxy
+- DOMAIN-SUFFIX,osxdaily.com,Proxy
+- DOMAIN-SUFFIX,overcast.fm,Proxy
+- DOMAIN-SUFFIX,ow.ly,Proxy
+- DOMAIN-SUFFIX,paddle.com,Proxy
+- DOMAIN-SUFFIX,paddleapi.com,Proxy
+- DOMAIN-SUFFIX,panoramio.com,Proxy
+- DOMAIN-SUFFIX,parallels.com,Proxy
+- DOMAIN-SUFFIX,parse.com,Proxy
+- DOMAIN-SUFFIX,pdfexpert.com,Proxy
+- DOMAIN-SUFFIX,periscope.tv,Proxy
+- DOMAIN-SUFFIX,piaotian.net,Proxy
+- DOMAIN-SUFFIX,picacomic.com,Proxy
+- DOMAIN-SUFFIX,picasaweb.com,Proxy
+- DOMAIN-SUFFIX,pinboard.in,Proxy
+- DOMAIN-SUFFIX,ping.pe,Proxy
+- DOMAIN-SUFFIX,pinterest.com,Proxy
+- DOMAIN-SUFFIX,pixelmator.com,Proxy
+- DOMAIN-SUFFIX,pixiv.net,Proxy
+- DOMAIN-SUFFIX,pixnet.net,Proxy
+- DOMAIN-SUFFIX,playpcesor.com,Proxy
+- DOMAIN-SUFFIX,pokemon.com,Proxy
+- DOMAIN-SUFFIX,polymer-project.org,Proxy
+- DOMAIN-SUFFIX,popo.tw,Proxy
+- DOMAIN-SUFFIX,potato.im,Proxy
+- DOMAIN-SUFFIX,redd.it,Proxy
+- DOMAIN-SUFFIX,rthk.hk,Proxy
+- DOMAIN-SUFFIX,prfct.co,Proxy
+- DOMAIN-SUFFIX,proxfree.com,Proxy
+- DOMAIN-SUFFIX,psiphon3.com,Proxy
+- DOMAIN-SUFFIX,ptt.cc,Proxy
+- DOMAIN-SUFFIX,pubu.com.tw,Proxy
+- DOMAIN-SUFFIX,puffinbrowser.com,Proxy
+- DOMAIN-SUFFIX,pushbullet.com,Proxy
+- DOMAIN-SUFFIX,pushwoosh.com,Proxy
+- DOMAIN-SUFFIX,pximg.net,Proxy
+- DOMAIN-SUFFIX,quora.com,Proxy
+- DOMAIN-SUFFIX,quoracdn.net,Proxy
+- DOMAIN-SUFFIX,readingtimes.com.tw,Proxy
+- DOMAIN-SUFFIX,readmoo.com,Proxy
+- DOMAIN-SUFFIX,recaptcha.net,Proxy
+- DOMAIN-SUFFIX,reddit.com,Proxy
+- DOMAIN-SUFFIX,redditmedia.com,Proxy
+- DOMAIN-SUFFIX,reuters.com,Proxy
+- DOMAIN-SUFFIX,rfi.fr,Proxy
+- DOMAIN-SUFFIX,rileyguide.com,Proxy
+- DOMAIN-SUFFIX,rime.im,Proxy
+- DOMAIN-SUFFIX,rsf.org,Proxy
+- DOMAIN-SUFFIX,sciencedaily.com,Proxy
+- DOMAIN-SUFFIX,sciencemag.org,Proxy
+- DOMAIN-SUFFIX,scribd.com,Proxy
+- DOMAIN-SUFFIX,search.com,Proxy
+- DOMAIN-SUFFIX,servebom.com,Proxy
+- DOMAIN-SUFFIX,sexinsex.net,Proxy
+- DOMAIN-SUFFIX,sfx.ms,Proxy
+- DOMAIN-SUFFIX,shadowsocks.org,Proxy
+- DOMAIN-SUFFIX,shadowverse.jp,Proxy
+- DOMAIN-SUFFIX,sharethis.com,Proxy
+- DOMAIN-SUFFIX,shazam.com,Proxy
+- DOMAIN-SUFFIX,shutterstock.com,Proxy
+- DOMAIN-SUFFIX,sidelinesnews.com,Proxy
+- DOMAIN-SUFFIX,simp.ly,Proxy
+- DOMAIN-SUFFIX,simplenote.com,Proxy
+- DOMAIN-SUFFIX,sketchappsources.com,Proxy
+- DOMAIN-SUFFIX,slack.com,Proxy
+- DOMAIN-SUFFIX,slack-edge.com,Proxy
+- DOMAIN-SUFFIX,slack-msgs.com,Proxy
+- DOMAIN-SUFFIX,slideshare.net,Proxy
+- DOMAIN-SUFFIX,smartdnsProxy.com,Proxy
+- DOMAIN-SUFFIX,smh.com.au,Proxy
+- DOMAIN-SUFFIX,snapchat.com,Proxy
+- DOMAIN-SUFFIX,sndcdn.com,Proxy
+- DOMAIN-SUFFIX,sockslist.net,Proxy
+- DOMAIN-SUFFIX,soundcloud.com,Proxy
+- DOMAIN-SUFFIX,sourceforge.net,Proxy
+- DOMAIN-SUFFIX,sowers.org.hk,Proxy
+- DOMAIN-SUFFIX,speedsmart.net,Proxy
+- DOMAIN-SUFFIX,spike.com,Proxy
+- DOMAIN-SUFFIX,squarespace.com,Proxy
+- DOMAIN-SUFFIX,ssa.gov,Proxy
+- DOMAIN-SUFFIX,sstatic.net,Proxy
+- DOMAIN-SUFFIX,st.luluku.pw,Proxy
+- DOMAIN-SUFFIX,stackoverflow.com,Proxy
+- DOMAIN-SUFFIX,starp2p.com,Proxy
+- DOMAIN-SUFFIX,startpage.com,Proxy
+- DOMAIN-SUFFIX,state.gov,Proxy
+- DOMAIN-SUFFIX,staticflickr.com,Proxy
+- DOMAIN-SUFFIX,storify.com,Proxy
+- DOMAIN-SUFFIX,stumbleupon.com,Proxy
+- DOMAIN-SUFFIX,sugarsync.com,Proxy
+- DOMAIN-SUFFIX,supermariorun.com,Proxy
+- DOMAIN-SUFFIX,surfeasy.com.au,Proxy
+- DOMAIN-SUFFIX,surge.run,Proxy
+- DOMAIN-SUFFIX,surrenderat20.net,Proxy
+- DOMAIN-SUFFIX,sydneytoday.com,Proxy
+- DOMAIN-SUFFIX,symauth.com,Proxy
+- DOMAIN-SUFFIX,symcb.com,Proxy
+- DOMAIN-SUFFIX,symcd.com,Proxy
+- DOMAIN-SUFFIX,t66y.com,Proxy
+- DOMAIN-SUFFIX,tablesgenerator.com,Proxy
+- DOMAIN-SUFFIX,tabtter.jp,Proxy
+- DOMAIN-SUFFIX,talk853.com,Proxy
+- DOMAIN-SUFFIX,talkboxapp.com,Proxy
+- DOMAIN-SUFFIX,talkonly.net,Proxy
+- DOMAIN-SUFFIX,tapbots.com,Proxy
+- DOMAIN-SUFFIX,tapbots.net,Proxy
+- DOMAIN-SUFFIX,techcrunch.com,Proxy
+- DOMAIN-SUFFIX,technorati.com,Proxy
+- DOMAIN-SUFFIX,techsmith.com,Proxy
+- DOMAIN-SUFFIX,teddysun.com,Proxy
+- DOMAIN-SUFFIX,textnow.me,Proxy
+- DOMAIN-SUFFIX,thebobs.com,Proxy
+- DOMAIN-SUFFIX,theinitium.com,Proxy
+- DOMAIN-SUFFIX,thepiratebay.org,Proxy
+- DOMAIN-SUFFIX,theverge.com,Proxy
+- DOMAIN-SUFFIX,thewgo.org,Proxy
+- DOMAIN-SUFFIX,tiltbrush.com,Proxy
+- DOMAIN-SUFFIX,time.com,Proxy
+- DOMAIN-SUFFIX,timeinc.net,Proxy
+- DOMAIN-SUFFIX,tinder.com,Proxy
+- DOMAIN-SUFFIX,tiny.cc,Proxy
+- DOMAIN-SUFFIX,tinychat.com,Proxy
+- DOMAIN-SUFFIX,tinypic.com,Proxy
+- DOMAIN-SUFFIX,tmblr.co,Proxy
+- DOMAIN-SUFFIX,todoist.com,Proxy
+- DOMAIN-SUFFIX,togetter.com,Proxy
+- DOMAIN-SUFFIX,tokyocn.com,Proxy
+- DOMAIN-SUFFIX,tomshardware.com,Proxy
+- DOMAIN-SUFFIX,torcn.com,Proxy
+- DOMAIN-SUFFIX,torrentprivacy.com,Proxy
+- DOMAIN-SUFFIX,torrentproject.se,Proxy
+- DOMAIN-SUFFIX,torrentz.eu,Proxy
+- DOMAIN-SUFFIX,traffichaus.com,Proxy
+- DOMAIN-SUFFIX,trakt.tv,Proxy
+- DOMAIN-SUFFIX,transparency.org,Proxy
+- DOMAIN-SUFFIX,trello.com,Proxy
+- DOMAIN-SUFFIX,trendsmap.com,Proxy
+- DOMAIN-SUFFIX,trulyergonomic.com,Proxy
+- DOMAIN-SUFFIX,trustasiassl.com,Proxy
+- DOMAIN-SUFFIX,tt-rss.org,Proxy
+- DOMAIN-SUFFIX,ttvnw.net,Proxy
+- DOMAIN-SUFFIX,tumblr.co,Proxy
+- DOMAIN-SUFFIX,tumblr.com,Proxy
+- DOMAIN-SUFFIX,turbobit.net,Proxy
+- DOMAIN-SUFFIX,tv.com,Proxy
+- DOMAIN-SUFFIX,tweetdeck.com,Proxy
+- DOMAIN-SUFFIX,tweetmarker.net,Proxy
+- DOMAIN-SUFFIX,twimg.co,Proxy
+- DOMAIN-SUFFIX,twitch.tv,Proxy
+- DOMAIN-SUFFIX,twitthat.com,Proxy
+- DOMAIN-SUFFIX,twtkr.com,Proxy
+- DOMAIN-SUFFIX,twttr.com,Proxy
+- DOMAIN-SUFFIX,txmblr.com,Proxy
+- DOMAIN-SUFFIX,typcn.com,Proxy
+- DOMAIN-SUFFIX,typekit.net,Proxy
+- DOMAIN-SUFFIX,typography.com,Proxy
+- DOMAIN-SUFFIX,ubertags.com,Proxy
+- DOMAIN-SUFFIX,ublock.org,Proxy
+- DOMAIN-SUFFIX,ubnt.com,Proxy
+- DOMAIN-SUFFIX,uchicago.edu,Proxy
+- DOMAIN-SUFFIX,udn.com,Proxy
+- DOMAIN-SUFFIX,ugo.com,Proxy
+- DOMAIN-SUFFIX,uhdwallpapers.org,Proxy
+- DOMAIN-SUFFIX,ulyssesapp.com,Proxy
+- DOMAIN-SUFFIX,unblockdmm.com,Proxy
+- DOMAIN-SUFFIX,unblocksites.co,Proxy
+- DOMAIN-SUFFIX,unpo.org,Proxy
+- DOMAIN-SUFFIX,unsplash.com,Proxy
+- DOMAIN-SUFFIX,untraceable.us,Proxy
+- DOMAIN-SUFFIX,uploaded.net,Proxy
+- DOMAIN-SUFFIX,uProxy.org,Proxy
+- DOMAIN-SUFFIX,upwork.com,Proxy
+- DOMAIN-SUFFIX,urchin.com,Proxy
+- DOMAIN-SUFFIX,urlparser.com,Proxy
+- DOMAIN-SUFFIX,us.to,Proxy
+- DOMAIN-SUFFIX,usertrust.com,Proxy
+- DOMAIN-SUFFIX,usgs.gov,Proxy
+- DOMAIN-SUFFIX,usma.edu,Proxy
+- DOMAIN-SUFFIX,uspto.gov,Proxy
+- DOMAIN-SUFFIX,ustream.tv,Proxy
+- DOMAIN-SUFFIX,v.gd,Proxy
+- DOMAIN-SUFFIX,v2ex.co,Proxy
+- DOMAIN-SUFFIX,v2ex.com,Proxy
+- DOMAIN-SUFFIX,v2ray.com,Proxy
+- DOMAIN-SUFFIX,van001.com,Proxy
+- DOMAIN-SUFFIX,vanpeople.com,Proxy
+- DOMAIN-SUFFIX,vansky.com,Proxy
+- DOMAIN-SUFFIX,vbstatic.co,Proxy
+- DOMAIN-SUFFIX,venchina.com,Proxy
+- DOMAIN-SUFFIX,venturebeat.com,Proxy
+- DOMAIN-SUFFIX,veoh.com,Proxy
+- DOMAIN-SUFFIX,verizonwireless.com,Proxy
+- DOMAIN-SUFFIX,viber.com,Proxy
+- DOMAIN-SUFFIX,vid.me,Proxy
+- DOMAIN-SUFFIX,videomega.tv,Proxy
+- DOMAIN-SUFFIX,vidinfo.org,Proxy
+- DOMAIN-SUFFIX,vimeo.com,Proxy
+- DOMAIN-SUFFIX,vimeocdn.com,Proxy
+- DOMAIN-SUFFIX,vimperator.org,Proxy
+- DOMAIN-SUFFIX,vine.co,Proxy
+- DOMAIN-SUFFIX,visibletweets.com,Proxy
+- DOMAIN-SUFFIX,viu.com,Proxy
+- DOMAIN-SUFFIX,vivaldi.com,Proxy
+- DOMAIN-SUFFIX,voachinese.com,Proxy
+- DOMAIN-SUFFIX,vocativ.com,Proxy
+- DOMAIN-SUFFIX,vox-cdn.com,Proxy
+- DOMAIN-SUFFIX,vpnaccount.org,Proxy
+- DOMAIN-SUFFIX,vpnbook.com,Proxy
+- DOMAIN-SUFFIX,vpngate.net,Proxy
+- DOMAIN-SUFFIX,vsco.co,Proxy
+- DOMAIN-SUFFIX,vultr.com,Proxy
+- DOMAIN-SUFFIX,vzw.com,Proxy
+- DOMAIN-SUFFIX,w.org,Proxy
+- DOMAIN-SUFFIX,w3schools.com,Proxy
+- DOMAIN-SUFFIX,wattpad.com,Proxy
+- DOMAIN-SUFFIX,web2project.net,Proxy
+- DOMAIN-SUFFIX,webfreer.com,Proxy
+- DOMAIN-SUFFIX,weblagu.com,Proxy
+- DOMAIN-SUFFIX,websnapr.com,Proxy
+- DOMAIN-SUFFIX,webtype.com,Proxy
+- DOMAIN-SUFFIX,webwarper.net,Proxy
+- DOMAIN-SUFFIX,wenxuecity.com,Proxy
+- DOMAIN-SUFFIX,westca.com,Proxy
+- DOMAIN-SUFFIX,westpoint.edu,Proxy
+- DOMAIN-SUFFIX,whatbrowser.org,Proxy
+- DOMAIN-SUFFIX,wikiwand.com,Proxy
+- DOMAIN-SUFFIX,wikileaks.info,Proxy
+- DOMAIN-SUFFIX,wikileaks.org,Proxy
+- DOMAIN-SUFFIX,wikileaks-forum.com,Proxy
+- DOMAIN-SUFFIX,wikimedia.org,Proxy
+- DOMAIN-SUFFIX,wikipedia.com,Proxy
+- DOMAIN-SUFFIX,wikipedia.org,Proxy
+- DOMAIN-SUFFIX,wn.com,Proxy
+- DOMAIN-SUFFIX,wordpress.com,Proxy
+- DOMAIN-SUFFIX,workflow.is,Proxy
+- DOMAIN-SUFFIX,workflowy.com,Proxy
+- DOMAIN-SUFFIX,worldcat.org,Proxy
+- DOMAIN-SUFFIX,wow.com,Proxy
+- DOMAIN-SUFFIX,wp.com,Proxy
+- DOMAIN-SUFFIX,wsj.com,Proxy
+- DOMAIN-SUFFIX,wsj.net,Proxy
+- DOMAIN-SUFFIX,wwitv.com,Proxy
+- DOMAIN-SUFFIX,xanga.com,Proxy
+- DOMAIN-SUFFIX,xclient.info,Proxy
+- DOMAIN-SUFFIX,xda-developers.com,Proxy
+- DOMAIN-SUFFIX,xeeno.com,Proxy
+- DOMAIN-SUFFIX,xiti.com,Proxy
+- DOMAIN-SUFFIX,xteko.com,Proxy
+- DOMAIN-SUFFIX,xuite.net,Proxy
+- DOMAIN-SUFFIX,xvideos.com,Proxy
+- DOMAIN-SUFFIX,yahoo.com,Proxy
+- DOMAIN-SUFFIX,yahooapis.com,Proxy
+- DOMAIN-SUFFIX,yasni.co.uk,Proxy
+- DOMAIN-SUFFIX,yastatic.net,Proxy
+- DOMAIN-SUFFIX,yeeyi.com,Proxy
+- DOMAIN-SUFFIX,yesasia.com,Proxy
+- DOMAIN-SUFFIX,yes-news.com,Proxy
+- DOMAIN-SUFFIX,yidio.com,Proxy
+- DOMAIN-SUFFIX,yimg.com,Proxy
+- DOMAIN-SUFFIX,ying.com,Proxy
+- DOMAIN-SUFFIX,yorkbbs.ca,Proxy
+- DOMAIN-SUFFIX,youmaker.com,Proxy
+- DOMAIN-SUFFIX,yourlisten.com,Proxy
+- DOMAIN-SUFFIX,youtu.be,Proxy
+- DOMAIN-SUFFIX,yoyo.org,Proxy
+- DOMAIN-SUFFIX,ytimg.com,Proxy
+- DOMAIN-SUFFIX,zacebook.com,Proxy
+- DOMAIN-SUFFIX,zalmos.com,Proxy
+- DOMAIN-SUFFIX,zaobao.com.sg,Proxy
+- DOMAIN-SUFFIX,zeutch.com,Proxy
+- DOMAIN-SUFFIX,zynamics.com,Proxy
+
+# > Force some domains which are fucked by GFW while resolving DNS,or do not respect the system Proxy
+# - USER-AGENT,WhatsApp*,Proxy
+
+- DOMAIN-KEYWORD,Appledaily,Proxy
+- DOMAIN-KEYWORD,beetalk,Proxy
+- DOMAIN-KEYWORD,blogspot,Proxy
+- DOMAIN-KEYWORD,dropbox,Proxy
+- DOMAIN-KEYWORD,facebook,Proxy
+- DOMAIN-KEYWORD,github,Proxy
+- DOMAIN-KEYWORD,instagram,Proxy
+- DOMAIN-KEYWORD,porn,Proxy
+- DOMAIN-KEYWORD,twitter,Proxy
+- DOMAIN-KEYWORD,whatsapp,Proxy
+- DOMAIN-KEYWORD,google,Proxy
+- DOMAIN-SUFFIX,1e100.net,Proxy
+- DOMAIN-SUFFIX,2mdn.net,Proxy
+- DOMAIN-SUFFIX,abc.xyz,Proxy
+- DOMAIN-SUFFIX,akamai.net,Proxy
+- DOMAIN-SUFFIX,appspot.com,Proxy
+- DOMAIN-SUFFIX,autodraw.com,Proxy
+- DOMAIN-SUFFIX,bandwagonhost.com,Proxy
+- DOMAIN-SUFFIX,blogblog.com,Proxy
+- DOMAIN-SUFFIX,chromeexperiments.com,Proxy
+- DOMAIN-SUFFIX,creativelab5.com,Proxy
+- DOMAIN-SUFFIX,crittercism.com,Proxy
+- DOMAIN-SUFFIX,culturalspot.org,Proxy
+- DOMAIN-SUFFIX,dartlang.org,Proxy
+- DOMAIN-SUFFIX,fb.com,Proxy
+- DOMAIN-SUFFIX,fb.me,Proxy
+- DOMAIN-SUFFIX,fbcdn.net,Proxy
+- DOMAIN-SUFFIX,fbsbx.com,Proxy
+- DOMAIN-SUFFIX,gcr.io,Proxy
+- DOMAIN-SUFFIX,gmail.com,Proxy
+- DOMAIN-SUFFIX,gosetsuden.jp,Proxy
+- DOMAIN-SUFFIX,gvt1.com,Proxy
+- DOMAIN-SUFFIX,gwtproject.org,Proxy
+- DOMAIN-SUFFIX,heroku.com,Proxy
+- DOMAIN-SUFFIX,html5rocks.com,Proxy
+- DOMAIN-SUFFIX,keyhole.com,Proxy
+- DOMAIN-SUFFIX,kobo.com,Proxy
+- DOMAIN-SUFFIX,kobobooks.com,Proxy
+- DOMAIN-SUFFIX,madewithcode.com,Proxy
+- DOMAIN-SUFFIX,material.io,Proxy
+- DOMAIN-SUFFIX,messenger.com,Proxy
+- DOMAIN-SUFFIX,netmarble.com,Proxy
+- DOMAIN-SUFFIX,nianticlabs.com,Proxy
+- DOMAIN-SUFFIX,pinimg.com,Proxy
+- DOMAIN-SUFFIX,pubnub.com,Proxy
+- DOMAIN-SUFFIX,scdn.co,Proxy
+- DOMAIN-SUFFIX,t.co,Proxy
+- DOMAIN-SUFFIX,tensorflow.org,Proxy
+- DOMAIN-SUFFIX,toggleable.com,Proxy
+- DOMAIN-SUFFIX,torproject.org,Proxy
+- DOMAIN-SUFFIX,twimg.com,Proxy
+- DOMAIN-SUFFIX,twitpic.com,Proxy
+- DOMAIN-SUFFIX,unfiltered.news,Proxy
+- DOMAIN-SUFFIX,waveprotocol.org,Proxy
+- DOMAIN-SUFFIX,webmproject.org,Proxy
+- DOMAIN-SUFFIX,webrtc.org,Proxy
+- DOMAIN-SUFFIX,zhs.tw,Proxy
+- DOMAIN-SUFFIX,zhs.ooo,Proxy
+- DOMAIN-SUFFIX,zhs.monster,Proxy
+- DOMAIN-SUFFIX,zhshi.gitlab.io,Proxy
+- DOMAIN-SUFFIX,sspanel.net,Proxy
+
+# > Amazon
+- IP-CIDR,13.32.0.0/16,Proxy
+- IP-CIDR,13.33.0.0/16,Proxy
+- IP-CIDR,13.35.0.0/17,Proxy
+- IP-CIDR,18.184.0.0/15,Proxy
+- IP-CIDR,18.194.0.0/15,Proxy
+- IP-CIDR,18.208.0.0/13,Proxy
+- IP-CIDR,18.232.0.0/14,Proxy
+- IP-CIDR,52.200.0.0/13,Proxy
+- IP-CIDR,52.58.0.0/15,Proxy
+- IP-CIDR,52.74.0.0/16,Proxy
+- IP-CIDR,52.77.0.0/16,Proxy
+- IP-CIDR,52.84.0.0/15,Proxy
+- IP-CIDR,54.156.0.0/14,Proxy
+- IP-CIDR,54.226.0.0/15,Proxy
+- IP-CIDR,54.230.156.0/22,Proxy
+- IP-CIDR,54.93.0.0/16,Proxy
+
+# > Facebook
+- IP-CIDR,103.4.96.0/22,Proxy
+- IP-CIDR,129.134.0.0/17,Proxy
+- IP-CIDR,157.240.0.0/17,Proxy
+- IP-CIDR,173.252.64.0/19,Proxy
+- IP-CIDR,173.252.96.0/19,Proxy
+- IP-CIDR,179.60.192.0/22,Proxy
+- IP-CIDR,185.60.216.0/22,Proxy
+- IP-CIDR,204.15.20.0/22,Proxy
+- IP-CIDR,31.13.24.0/21,Proxy
+- IP-CIDR,31.13.64.0/18,Proxy
+- IP-CIDR,45.64.40.0/22,Proxy
+- IP-CIDR,66.220.144.0/20,Proxy
+- IP-CIDR,69.171.224.0/19,Proxy
+- IP-CIDR,69.63.176.0/20,Proxy
+- IP-CIDR,74.119.76.0/22,Proxy
+
+# > Google
+- IP-CIDR,173.194.0.0/16,Proxy
+- IP-CIDR,74.125.0.0/16,Proxy
+
+# > Kakao Talk
+- IP-CIDR,1.201.0.0/24,Proxy
+- IP-CIDR,103.246.56.0/22,Proxy
+- IP-CIDR,103.27.148.0/22,Proxy
+- IP-CIDR,110.76.140.0/22,Proxy
+- IP-CIDR,113.61.104.0/22,Proxy
+- IP-CIDR,27.0.236.0/22,Proxy
+
+# > LINE
+- IP-CIDR,103.2.28.0/22,Proxy
+- IP-CIDR,119.235.224.0/21,Proxy
+- IP-CIDR,119.235.232.0/23,Proxy
+- IP-CIDR,119.235.235.0/24,Proxy
+- IP-CIDR,119.235.236.0/23,Proxy
+- IP-CIDR,125.6.146.0/24,Proxy
+- IP-CIDR,125.6.149.0/24,Proxy
+- IP-CIDR,125.6.190.0/24,Proxy
+- IP-CIDR,125.209.208.0/20,Proxy
+- IP-CIDR,203.104.103.0/24,Proxy
+- IP-CIDR,203.104.128.0/20,Proxy
+- IP-CIDR,203.174.66.64/26,Proxy
+- IP-CIDR,203.174.77.0/24,Proxy
+
+# > Potato Chat
+- IP-CIDR,13.251.24.157/24,Proxy
+- IP-CIDR,13.251.41.203/24,Proxy
+- IP-CIDR,17.252.156.147/24,Proxy
+- IP-CIDR,17.252.157.26/24,Proxy
+
+# > SoftLayer
+- IP-CIDR,74.86.0.0/16,Proxy
+- IP-CIDR,75.126.0.0/16,Proxy
+- IP-CIDR,174.37.0.0/16,Proxy
+- IP-CIDR,208.43.0.0/16,Proxy
+
+# > Telegram
+- DOMAIN-SUFFIX,t.me,Proxy
+- DOMAIN-SUFFIX,tdesktop.com,Proxy
+- DOMAIN-SUFFIX,telegra.ph,Proxy
+- DOMAIN-SUFFIX,telegram.me,Proxy
+- DOMAIN-SUFFIX,telegram.org,Proxy
+- DOMAIN-SUFFIX,telesco.pe,Proxy
+- IP-CIDR,91.108.4.0/22,Proxy
+- IP-CIDR,91.108.8.0/22,Proxy
+- IP-CIDR,91.108.12.0/22,Proxy
+- IP-CIDR,91.108.16.0/22,Proxy
+- IP-CIDR,91.108.56.0/22,Proxy
+- IP-CIDR,149.154.160.0/20,Proxy
+- IP-CIDR,2001:b28:f23d::/48,Proxy
+- IP-CIDR,2001:b28:f23f::/48,Proxy
+- IP-CIDR,2001:67c:4e8::/48,Proxy
+
+# > Beplay
+- DOMAIN-KEYWORD,beplay,国内网站或资源
+
+# > Blizzard
+# - USER-AGENT,hearthstone*,国内网站或资源
+- DOMAIN,cdp.cloud.unity3d.com,国内网站或资源
+- DOMAIN-SUFFIX,battle.net,国内网站或资源
+- DOMAIN-SUFFIX,battlenet.com,国内网站或资源
+- DOMAIN-SUFFIX,blizzard.com,国内网站或资源
+
+# > Prior
+- DOMAIN,client.amplifi.com,国内网站或资源
+- DOMAIN,ip.bjango.com,国内网站或资源
+- DOMAIN-SUFFIX,alphassl.com,国内网站或资源
+- DOMAIN-SUFFIX,edu.cn,国内网站或资源
+
+# > TeamViewer
+- IP-CIDR,185.188.32.0/24,国内网站或资源
+- IP-CIDR,185.188.33.0/24,国内网站或资源
+- IP-CIDR,185.188.34.0/24,国内网站或资源
+- IP-CIDR,185.188.35.0/24,国内网站或资源
+- IP-CIDR6,2a0b:b580::/48,国内网站或资源
+- IP-CIDR6,2a0b:b581::/48,国内网站或资源
+- IP-CIDR6,2a0b:b582::/48,国内网站或资源
+- IP-CIDR6,2a0b:b583::/48,国内网站或资源
+
+- DOMAIN-SUFFIX,12306.cn,国内网站或资源
+- DOMAIN-SUFFIX,12306.com,国内网站或资源
+- DOMAIN-SUFFIX,126.net,国内网站或资源
+- DOMAIN-SUFFIX,163.com,国内网站或资源
+- DOMAIN-SUFFIX,360.cn,国内网站或资源
+- DOMAIN-SUFFIX,360.com,国内网站或资源
+- DOMAIN-SUFFIX,360buy.com,国内网站或资源
+- DOMAIN-SUFFIX,360buyimg.com,国内网站或资源
+- DOMAIN-SUFFIX,36kr.com,国内网站或资源
+- DOMAIN-SUFFIX,51ym.me,国内网站或资源
+- DOMAIN-SUFFIX,58.com,国内网站或资源
+- DOMAIN-SUFFIX,8686c.com,国内网站或资源
+- DOMAIN-SUFFIX,abercrombie.com,国内网站或资源
+- DOMAIN-SUFFIX,acfun.tv,国内网站或资源
+- DOMAIN-SUFFIX,adobesc.com,国内网站或资源
+- DOMAIN-SUFFIX,air-matters.com,国内网站或资源
+- DOMAIN-SUFFIX,air-matters.io,国内网站或资源
+- DOMAIN-SUFFIX,aixifan.com,国内网站或资源
+- DOMAIN-SUFFIX,akadns.net,国内网站或资源
+- DOMAIN-SUFFIX,alibabacloud.com,国内网站或资源
+- DOMAIN-SUFFIX,alicdn.com,国内网站或资源
+- DOMAIN-SUFFIX,alipay.com,国内网站或资源
+- DOMAIN-SUFFIX,alipayobjects.com,国内网站或资源
+- DOMAIN-SUFFIX,aliyun.com,国内网站或资源
+- DOMAIN-SUFFIX,aliyuncs.com,国内网站或资源
+- DOMAIN-SUFFIX,amap.com,国内网站或资源
+- DOMAIN-SUFFIX,apache.org,国内网站或资源
+- DOMAIN-SUFFIX,api.crisp.chat,国内网站或资源
+- DOMAIN-SUFFIX,appshike.com,国内网站或资源
+- DOMAIN-SUFFIX,appstore.com,国内网站或资源
+- DOMAIN-SUFFIX,autonavi.com,国内网站或资源
+- DOMAIN-SUFFIX,aweme.snssdk.com,国内网站或资源
+- DOMAIN-SUFFIX,bababian.com,国内网站或资源
+- DOMAIN-SUFFIX,baidu.com,国内网站或资源
+- DOMAIN-SUFFIX,baidupcs.com,国内网站或资源
+- DOMAIN-SUFFIX,battle.net,国内网站或资源
+- DOMAIN-SUFFIX,bdimg.com,国内网站或资源
+- DOMAIN-SUFFIX,bdstatic.com,国内网站或资源
+- DOMAIN-SUFFIX,beatsbydre.com,国内网站或资源
+- DOMAIN-SUFFIX,bet365.com,国内网站或资源
+- DOMAIN-SUFFIX,broadcasthe.net,国内网站或资源
+- DOMAIN-SUFFIX,caiyunapp.com,国内网站或资源
+- DOMAIN-SUFFIX,ccgslb.com,国内网站或资源
+- DOMAIN-SUFFIX,ccgslb.net,国内网站或资源
+- DOMAIN-SUFFIX,chinacache.net,国内网站或资源
+- DOMAIN-SUFFIX,chunbo.com,国内网站或资源
+- DOMAIN-SUFFIX,chunboimg.com,国内网站或资源
+- DOMAIN-SUFFIX,clashroyaleapp.com,国内网站或资源
+- DOMAIN-SUFFIX,clouddn.com,国内网站或资源
+- DOMAIN-SUFFIX,cloudsigma.com,国内网站或资源
+- DOMAIN-SUFFIX,cloudxns.net,国内网站或资源
+- DOMAIN-SUFFIX,cmct.tv,国内网站或资源
+- DOMAIN-SUFFIX,cmfu.com,国内网站或资源
+- DOMAIN-SUFFIX,cnbeta.com,国内网站或资源
+- DOMAIN-SUFFIX,cnbetacdn.com,国内网站或资源
+- DOMAIN-SUFFIX,chdbits.co,国内网站或资源
+- DOMAIN-SUFFIX,cnlang.org,国内网站或资源
+- DOMAIN-SUFFIX,culturedcode.com,国内网站或资源
+- DOMAIN-SUFFIX,dct-cloud.com,国内网站或资源
+- DOMAIN-SUFFIX,didialift.com,国内网站或资源
+- DOMAIN-SUFFIX,digicert.com,国内网站或资源
+- DOMAIN-SUFFIX,douban.com,国内网站或资源
+- DOMAIN-SUFFIX,doubanio.com,国内网站或资源
+- DOMAIN-SUFFIX,douyin.com,国内网站或资源
+- DOMAIN-SUFFIX,douyu.com,国内网站或资源
+- DOMAIN-SUFFIX,douyu.tv,国内网站或资源
+- DOMAIN-SUFFIX,douyutv.com,国内网站或资源
+- DOMAIN-SUFFIX,duokan.com,国内网站或资源
+- DOMAIN-SUFFIX,duoshuo.com,国内网站或资源
+- DOMAIN-SUFFIX,dytt8.net,国内网站或资源
+- DOMAIN-SUFFIX,easou.com,国内网站或资源
+- DOMAIN-SUFFIX,ecitic.com,国内网站或资源
+- DOMAIN-SUFFIX,ecitic.net,国内网站或资源
+- DOMAIN-SUFFIX,eclipse.org,国内网站或资源
+- DOMAIN-SUFFIX,eudic.net,国内网站或资源
+- DOMAIN-SUFFIX,ewqcxz.com,国内网站或资源
+- DOMAIN-SUFFIX,feng.com,国内网站或资源
+- DOMAIN-SUFFIX,fir.im,国内网站或资源
+- DOMAIN-SUFFIX,firefox.com,国内网站或资源
+- DOMAIN-SUFFIX,frdic.com,国内网站或资源
+- DOMAIN-SUFFIX,fresh-ideas.cc,国内网站或资源
+- DOMAIN-SUFFIX,gameloft.com,国内网站或资源
+- DOMAIN-SUFFIX,geetest.com,国内网站或资源
+- DOMAIN-SUFFIX,godic.net,国内网站或资源
+- DOMAIN-SUFFIX,goodread.com,国内网站或资源
+- DOMAIN-SUFFIX,google.cn,国内网站或资源
+- DOMAIN-SUFFIX,gtimg.com,国内网站或资源
+- DOMAIN-SUFFIX,haibian.com,国内网站或资源
+- DOMAIN-SUFFIX,hao123.com,国内网站或资源
+- DOMAIN-SUFFIX,haosou.com,国内网站或资源
+- DOMAIN-SUFFIX,hdchina.org,国内网站或资源
+- DOMAIN-SUFFIX,hdcmct.org,国内网站或资源
+- DOMAIN-SUFFIX,hkserversolution.com,国内网站或资源
+- DOMAIN-SUFFIX,hollisterco.com,国内网站或资源
+- DOMAIN-SUFFIX,hongxiu.com,国内网站或资源
+- DOMAIN-SUFFIX,hxcdn.net,国内网站或资源
+- DOMAIN-SUFFIX,icedropper.com,国内网站或资源
+- DOMAIN-SUFFIX,iciba.com,国内网站或资源
+- DOMAIN-SUFFIX,ifeng.com,国内网站或资源
+- DOMAIN-SUFFIX,ifengimg.com,国内网站或资源
+- DOMAIN-SUFFIX,images-amazon.com,国内网站或资源
+- DOMAIN-SUFFIX,img4me.com,国内网站或资源
+- DOMAIN-SUFFIX,ithome.com,国内网站或资源
+- DOMAIN-SUFFIX,ixdzs.com,国内网站或资源
+- DOMAIN-SUFFIX,jd.com,国内网站或资源
+- DOMAIN-SUFFIX,jd.hk,国内网站或资源
+- DOMAIN-SUFFIX,jianshu.com,国内网站或资源
+- DOMAIN-SUFFIX,jianshu.io,国内网站或资源
+- DOMAIN-SUFFIX,jianshuapi.com,国内网站或资源
+- DOMAIN-SUFFIX,jiathis.com,国内网站或资源
+- DOMAIN-SUFFIX,jomodns.com,国内网站或资源
+- DOMAIN-SUFFIX,jsboxbbs.com,国内网站或资源
+- DOMAIN-SUFFIX,knewone.com,国内网站或资源
+- DOMAIN-SUFFIX,kuaidi100.com,国内网站或资源
+- DOMAIN-SUFFIX,kugou.com,国内网站或资源
+- DOMAIN-SUFFIX,lecloud.com,国内网站或资源
+- DOMAIN-SUFFIX,lemicp.com,国内网站或资源
+- DOMAIN-SUFFIX,letv.com,国内网站或资源
+- DOMAIN-SUFFIX,letvcloud.com,国内网站或资源
+- DOMAIN-SUFFIX,lizhi.io,国内网站或资源
+- DOMAIN-SUFFIX,localizecdn.com,国内网站或资源
+- DOMAIN-SUFFIX,lucifr.com,国内网站或资源
+- DOMAIN-SUFFIX,luoo.net,国内网站或资源
+- DOMAIN-SUFFIX,lxdns.com,国内网站或资源
+- DOMAIN-SUFFIX,mai.tn,国内网站或资源
+- DOMAIN-SUFFIX,meizu.com,国内网站或资源
+- DOMAIN-SUFFIX,mi.com,国内网站或资源
+- DOMAIN-SUFFIX,miaopai.com,国内网站或资源
+- DOMAIN-SUFFIX,miui.com,国内网站或资源
+- DOMAIN-SUFFIX,miwifi.com,国内网站或资源
+- DOMAIN-SUFFIX,mob.com,国内网站或资源
+- DOMAIN-SUFFIX,moji.com,国内网站或资源
+- DOMAIN-SUFFIX,moke.com,国内网站或资源
+- DOMAIN-SUFFIX,mxhichina.com,国内网站或资源
+- DOMAIN-SUFFIX,myqcloud.com,国内网站或资源
+- DOMAIN-SUFFIX,myunlu.com,国内网站或资源
+- DOMAIN-SUFFIX,ngabbs.com,国内网站或资源
+- DOMAIN-SUFFIX,netease.com,国内网站或资源
+- DOMAIN-SUFFIX,nfoservers.com,国内网站或资源
+- DOMAIN-SUFFIX,nssurge.com,国内网站或资源
+- DOMAIN-SUFFIX,nuomi.com,国内网站或资源
+- DOMAIN-SUFFIX,ourbits.club,国内网站或资源
+- DOMAIN-SUFFIX,ourdvs.com,国内网站或资源
+- DOMAIN-SUFFIX,passthepopcorn.me,国内网站或资源
+- DOMAIN-SUFFIX,pgyer.com,国内网站或资源
+- DOMAIN-SUFFIX,pniao.com,国内网站或资源
+- DOMAIN-SUFFIX,privatehd.to,国内网站或资源
+- DOMAIN-SUFFIX,pstatp.com,国内网站或资源
+- DOMAIN-SUFFIX,qbox.me,国内网站或资源
+- DOMAIN-SUFFIX,qcloud.com,国内网站或资源
+- DOMAIN-SUFFIX,qdaily.com,国内网站或资源
+- DOMAIN-SUFFIX,qdmm.com,国内网站或资源
+- DOMAIN-SUFFIX,qhimg.com,国内网站或资源
+- DOMAIN-SUFFIX,qidian.com,国内网站或资源
+- DOMAIN-SUFFIX,qihucdn.com,国内网站或资源
+- DOMAIN-SUFFIX,qin.io,国内网站或资源
+- DOMAIN-SUFFIX,qingmang.me,国内网站或资源
+- DOMAIN-SUFFIX,qingmang.mobi,国内网站或资源
+- DOMAIN-SUFFIX,qiniucdn.com,国内网站或资源
+- DOMAIN-SUFFIX,qiniudn.com,国内网站或资源
+- DOMAIN-SUFFIX,qq.com,国内网站或资源
+- DOMAIN-SUFFIX,qqurl.com,国内网站或资源
+- DOMAIN-SUFFIX,rarbg.to,国内网站或资源
+- DOMAIN-SUFFIX,redacted.ch,国内网站或资源
+- DOMAIN-SUFFIX,rrmj.tv,国内网站或资源
+- DOMAIN-SUFFIX,ruguoapp.com,国内网站或资源
+- DOMAIN-SUFFIX,sandai.net,国内网站或资源
+- DOMAIN-SUFFIX,sf-express.com,国内网站或资源
+- DOMAIN-SUFFIX,sinaapp.com,国内网站或资源
+- DOMAIN-SUFFIX,sinaimg.cn,国内网站或资源
+- DOMAIN-SUFFIX,sinaimg.com,国内网站或资源
+- DOMAIN-SUFFIX,sm.ms,国内网站或资源
+- DOMAIN-SUFFIX,smzdm.com,国内网站或资源
+- DOMAIN-SUFFIX,snssdk.com,国内网站或资源
+- DOMAIN-SUFFIX,snwx.com,国内网站或资源
+- DOMAIN-SUFFIX,so.com,国内网站或资源
+- DOMAIN-SUFFIX,sogou.com,国内网站或资源
+- DOMAIN-SUFFIX,sogoucdn.com,国内网站或资源
+- DOMAIN-SUFFIX,sohu.com,国内网站或资源
+- DOMAIN-SUFFIX,soku.com,国内网站或资源
+- DOMAIN-SUFFIX,soso.com,国内网站或资源
+- DOMAIN-SUFFIX,sspai.com,国内网站或资源
+- DOMAIN-SUFFIX,startssl.com,国内网站或资源
+- DOMAIN-SUFFIX,store.steampowered.com,国内网站或资源
+- DOMAIN-SUFFIX,suning.com,国内网站或资源
+- DOMAIN-SUFFIX,symcd.com,国内网站或资源
+- DOMAIN-SUFFIX,taobao.com,国内网站或资源
+- DOMAIN-SUFFIX,tawk.link,国内网站或资源
+- DOMAIN-SUFFIX,tawk.to,国内网站或资源
+- DOMAIN-SUFFIX,teamviewer.com,国内网站或资源
+- DOMAIN-SUFFIX,tenpay.com,国内网站或资源
+- DOMAIN-SUFFIX,tietuku.com,国内网站或资源
+- DOMAIN-SUFFIX,tmall.com,国内网站或资源
+- DOMAIN-SUFFIX,tmzvps.com,国内网站或资源
+- DOMAIN-SUFFIX,trello.com,国内网站或资源
+- DOMAIN-SUFFIX,trellocdn.com,国内网站或资源
+- DOMAIN-SUFFIX,totheglory.im,国内网站或资源
+- DOMAIN-SUFFIX,ttmeiju.com,国内网站或资源
+- DOMAIN-SUFFIX,tudou.com,国内网站或资源
+- DOMAIN-SUFFIX,udache.com,国内网站或资源
+- DOMAIN-SUFFIX,umengcloud.com,国内网站或资源
+- DOMAIN-SUFFIX,upaiyun.com,国内网站或资源
+- DOMAIN-SUFFIX,upyun.com,国内网站或资源
+- DOMAIN-SUFFIX,uxengine.net,国内网站或资源
+- DOMAIN-SUFFIX,wandoujia.com,国内网站或资源
+- DOMAIN-SUFFIX,weather.bjango.com,国内网站或资源
+- DOMAIN-SUFFIX,weather.com,国内网站或资源
+- DOMAIN-SUFFIX,webqxs.com,国内网站或资源
+- DOMAIN-SUFFIX,weibo.cn,国内网站或资源
+- DOMAIN-SUFFIX,weibo.com,国内网站或资源
+- DOMAIN-SUFFIX,weico.cc,国内网站或资源
+- DOMAIN-SUFFIX,weiphone.com,国内网站或资源
+- DOMAIN-SUFFIX,weiphone.net,国内网站或资源
+- DOMAIN-SUFFIX,wenku8.net,国内网站或资源
+- DOMAIN-SUFFIX,werewolf.53site.com,国内网站或资源
+- DOMAIN-SUFFIX,windowsupdate.com,国内网站或资源
+- DOMAIN-SUFFIX,wkcdn.com,国内网站或资源
+- DOMAIN-SUFFIX,workflowy.com,国内网站或资源
+- DOMAIN-SUFFIX,xdrig.com,国内网站或资源
+- DOMAIN-SUFFIX,xhostfire.com,国内网站或资源
+- DOMAIN-SUFFIX,xiami.com,国内网站或资源
+- DOMAIN-SUFFIX,xiami.net,国内网站或资源
+- DOMAIN-SUFFIX,xiaojukeji.com,国内网站或资源
+- DOMAIN-SUFFIX,xiaomi.com,国内网站或资源
+- DOMAIN-SUFFIX,xiaomi.net,国内网站或资源
+- DOMAIN-SUFFIX,xiaomicp.com,国内网站或资源
+- DOMAIN-SUFFIX,ximalaya.com,国内网站或资源
+- DOMAIN-SUFFIX,xitek.com,国内网站或资源
+- DOMAIN-SUFFIX,xmcdn.com,国内网站或资源
+- DOMAIN-SUFFIX,xslb.net,国内网站或资源
+- DOMAIN-SUFFIX,yach.me,国内网站或资源
+- DOMAIN-SUFFIX,yeepay.com,国内网站或资源
+- DOMAIN-SUFFIX,yhd.com,国内网站或资源
+- DOMAIN-SUFFIX,yinxiang.com,国内网站或资源
+- DOMAIN-SUFFIX,yixia.com,国内网站或资源
+- DOMAIN-SUFFIX,ykimg.com,国内网站或资源
+- DOMAIN-SUFFIX,youdao.com,国内网站或资源
+- DOMAIN-SUFFIX,youku.com,国内网站或资源
+- DOMAIN-SUFFIX,yunjiasu-cdn.net,国内网站或资源
+- DOMAIN-SUFFIX,zealer.com,国内网站或资源
+- DOMAIN-SUFFIX,zgslb.net,国内网站或资源
+- DOMAIN-SUFFIX,zhihu.com,国内网站或资源
+- DOMAIN-SUFFIX,zhimg.com,国内网站或资源
+- DOMAIN-SUFFIX,zimuzu.tv,国内网站或资源
+- DOMAIN-SUFFIX,zmz002.com,国内网站或资源
+
+- IP-CIDR,1.255.62.0/24,国内网站或资源
+
+# > CN
+- DOMAIN-SUFFIX,cn,国内网站或资源
+
+- DOMAIN-SUFFIX,local,DIRECT
+- IP-CIDR,127.0.0.0/8,DIRECT
+- IP-CIDR,172.16.0.0/12,DIRECT
+- IP-CIDR,192.168.0.0/16,DIRECT
+- IP-CIDR,10.0.0.0/8,DIRECT
+- IP-CIDR,17.0.0.0/8,DIRECT
+- IP-CIDR,100.64.0.0/10,DIRECT
+
+# > Apple
+- DOMAIN-SUFFIX,aaplimg.com,DIRECT
+- DOMAIN-SUFFIX,apple.co,DIRECT
+- DOMAIN-SUFFIX,apple.com,DIRECT
+- DOMAIN-SUFFIX,apple.com.cn,DIRECT
+- DOMAIN-SUFFIX,apple-cloudkit.com,DIRECT
+- DOMAIN-SUFFIX,appstore.com,DIRECT
+- DOMAIN-SUFFIX,cdn-apple.com,DIRECT
+- DOMAIN-SUFFIX,crashlytics.com,DIRECT
+- DOMAIN-SUFFIX,icloud.com,DIRECT
+- DOMAIN-SUFFIX,icloud.com.cn,DIRECT
+- DOMAIN-SUFFIX,icloud-content.com,DIRECT
+- DOMAIN-SUFFIX,me.com,DIRECT
+- DOMAIN-SUFFIX,mzstatic.com,DIRECT
+- DOMAIN,www-cdn.icloud.com.akadns.net,DIRECT
+- IP-CIDR,17.0.0.0/8,DIRECT
+
+# > Google
+- DOMAIN-KEYWORD,mtalk.google.com,DIRECT
+- DOMAIN,safebrowsing.googleapis.com,DIRECT
+- DOMAIN-SUFFIX,dl.google.com,DIRECT
+
+# > Steam
+# - USER-AGENT,Steam*,DIRECT
+- DOMAIN-SUFFIX,steamcontent.com,DIRECT
+
+# > Windows
+- DOMAIN-SUFFIX,windows.com,DIRECT
+- DOMAIN-SUFFIX,windows.net,DIRECT
+- DOMAIN-SUFFIX,windowsupdate.com,DIRECT
+
+# > Xunlei
+# - PROCESS-NAME,Thunder,DIRECT
+# - USER-AGENT,%E8%BF%85%E9%9B%B7,DIRECT
+- DOMAIN-SUFFIX,xunlei.com,DIRECT
+
+# > Private Tracker
+- DOMAIN-SUFFIX,awesome-hd.me,DIRECT
+- DOMAIN-SUFFIX,broadcasthe.net,DIRECT
+- DOMAIN-SUFFIX,chdbits.co,DIRECT
+- DOMAIN-SUFFIX,classix-unlimited.co.uk,DIRECT
+- DOMAIN-SUFFIX,empornium.me,DIRECT
+- DOMAIN-SUFFIX,gazellegames.net,DIRECT
+- DOMAIN-SUFFIX,hdchina.org,DIRECT
+- DOMAIN-SUFFIX,hdsky.me,DIRECT
+- DOMAIN-SUFFIX,icetorrent.org,DIRECT
+- DOMAIN-SUFFIX,jpopsuki.eu,DIRECT
+- DOMAIN-SUFFIX,keepfrds.com,DIRECT
+- DOMAIN-SUFFIX,madsrevolution.net,DIRECT
+- DOMAIN-SUFFIX,m-team.cc,DIRECT
+- DOMAIN-SUFFIX,nanyangpt.com,DIRECT
+- DOMAIN-SUFFIX,ncore.cc,DIRECT
+- DOMAIN-SUFFIX,open.cd,DIRECT
+- DOMAIN-SUFFIX,ourbits.club,DIRECT
+- DOMAIN-SUFFIX,passthepopcorn.me,DIRECT
+- DOMAIN-SUFFIX,privatehd.to,DIRECT
+- DOMAIN-SUFFIX,redacted.ch,DIRECT
+- DOMAIN-SUFFIX,springsunday.net,DIRECT
+- DOMAIN-SUFFIX,tjupt.org,DIRECT
+- DOMAIN-SUFFIX,totheglory.im,DIRECT
+
+# > Accelerate direct sites
+- DOMAIN-KEYWORD,announce,DIRECT
+- DOMAIN-KEYWORD,torrent,DIRECT
+- DOMAIN-KEYWORD,tracker,DIRECT
+- DOMAIN-SUFFIX,smtp,DIRECT
+# - URL-REGEX,(Subject|HELO|SMTP),DIRECT
+#- URL-REGEX,(api|ps|sv|offnavi|newvector|ulog\.imap|newloc)(\.map|)\.(baidu|n\.shifen)\.com,DIRECT
+#- URL-REGEX,(.+\.|^)(360|so|qihoo|360safe|qhimg|360totalsecurity|yunpan)\.(cn|com),DIRECT
+#- URL-REGEX,(.+\.)?(torrent|announce\.php\?passkey=|tracker|BitTorrent|bt_key|ed2k|find_node|get_peers|info_hash|magnet:|peer_id=|sandai|Thunder|XLLiveUD|xunlei)(\..+)?,DIRECT
+- GEOIP,CN,国内网站或资源
+- MATCH,其它规则外
