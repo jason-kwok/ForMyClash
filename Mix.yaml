@@ -2103,12 +2103,75 @@ proxy-groups:
   - name: Netflix
     type: select
     proxies:
-    - BWHLA-V
-    - Nexitally-HK
-    - Nexitally-US
-    - Nexitally-TW
-    - Nexitally-SG
-    - Nexitally-JP
+    - 🇭🇰 Hong Kong 01
+    - 🇭🇰 Hong Kong 02
+    - 🇭🇰 Hong Kong 03
+    - 🇭🇰 Hong Kong 04
+    - 🇭🇰 Hong Kong 05
+    - 🇭🇰 Hong Kong 06
+    - 🇭🇰 Hong Kong 07
+    - 🇭🇰 Hong Kong 08
+    - 🇭🇰 Hong Kong 09
+    - 🇭🇰 Hong Kong 10
+    - 🇭🇰 Hong Kong 11
+    - 🇭🇰 Hong Kong 12
+    - 🇭🇰 Hong Kong 13
+    - 🇭🇰 Hong Kong 14
+    - 🇭🇰 Hong Kong 15
+    - 🇭🇰 Hong Kong 16
+    - 🇭🇰 Hong Kong 17
+    - 🇭🇰 Hong Kong 18
+    - 🇭🇰 Hong Kong 19
+    - 🇭🇰 Hong Kong 23 IPv4 Stream
+    - 🇺🇸 United States 01
+    - 🇺🇸 United States 02
+    - 🇺🇸 United States 03
+    - 🇺🇸 United States 08
+    - 🇺🇸 United States 09
+    - 🇺🇸 United States 10
+    - 🇺🇸 United States 11
+    - 🇺🇸 United States 12
+    - 🇺🇸 United States 13
+    - 🇺🇸 United States 16 IPv4 Stream
+    - 🇺🇸 United States 17 IPv4 Stream
+    - 🇺🇸 United States 17 IPv4 Stream
+    - 🇯🇵 Japan 01
+    - 🇯🇵 Japan 02
+    - 🇯🇵 Japan 03
+    - 🇯🇵 Japan 04
+    - 🇯🇵 Japan 05
+    - 🇯🇵 Japan 06
+    - 🇯🇵 Japan 07
+    - 🇯🇵 Japan 08
+    - 🇯🇵 Japan 09
+    - 🇯🇵 Japan 10
+    - 🇯🇵 Japan 11
+    - 🇯🇵 Japan 12
+    - 🇯🇵 Japan 13
+    - 🇯🇵 Japan 14
+    - 🇯🇵 Japan 15
+    - 🇯🇵 Japan 16
+    - 🇯🇵 Japan 17
+    - 🇯🇵 Japan 18
+    - 🇯🇵 Japan 19
+    - 🇯🇵 Japan 20
+    - 🇯🇵 Japan 21
+    - 🇨🇳 Taiwan 1
+    - 🇨🇳 Taiwan 2
+    - 🇨🇳 Taiwan 3
+    - 🇨🇳 Taiwan 4
+    - 🇨🇳 Taiwan 5
+    - 🇸🇬 Singapore 01
+    - 🇸🇬 Singapore 02
+    - 🇸🇬 Singapore 03
+    - 🇸🇬 Singapore 04
+    - 🇸🇬 Singapore 05
+    - 🇸🇬 Singapore 06
+    - 🇸🇬 Singapore 07
+    - 🇸🇬 Singapore 08
+    - 🇸🇬 Singapore 09
+    - 🇸🇬 Singapore 10
+    - 🇸🇬 Singapore 12 IPv4 Stream
 
   - name: LinkedIn
     type: select
