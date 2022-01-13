@@ -2099,7 +2099,6 @@ proxy-groups:
     - 🇸🇬 Singapore 10
     - 🇸🇬 Singapore 12 IPv4 Stream
 
-
   - name: Netflix
     type: select
     proxies:
