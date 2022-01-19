@@ -80,6 +80,14 @@ dns:
     # - 240.0.0.0/4
 
 proxies:
+  - name: BWHLA-Snell
+    type: snell
+    server: 64.64.228.248
+    port: 13254
+    psk: PmgC0jzcShypLgjg
+    obfs-opts:
+     mode: tls
+     host: bing.com
   - name: BWHLA-T
     type: trojan
     udp: true
@@ -2024,7 +2032,7 @@ proxy-groups:
     proxies:
     - Nexitally-HK
     - Nexitally-US
-    - BWHLA-T
+    - BWHLA-Snell
     - Auto-ZHS-HK
 
   - name: Disney+
@@ -2180,7 +2188,7 @@ proxy-groups:
     - Nexitally-US
     - Nexitally-TW
     - Nexitally-SG
-    - BWHLA-T
+    - BWHLA-Snell
 
   - name: Microsoft
     type: select
