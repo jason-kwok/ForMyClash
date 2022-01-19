@@ -1,4 +1,4 @@
-#Update on 2022-01-13
+#Update on 2022-01-19
 
 port: 7890
 socks-port: 7891
@@ -2024,6 +2024,7 @@ proxy-groups:
     proxies:
     - Nexitally-HK
     - Nexitally-US
+    - BWHLA-T
     - Auto-ZHS-HK
 
   - name: Disney+
